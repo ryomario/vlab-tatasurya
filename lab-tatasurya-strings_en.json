@@ -4,5 +4,90 @@
   },
   "screen.name": {
     "value": "Lab Tatasurya"
+  },
+
+  "ourSun": {
+    "value": "Matahari"
+  },
+  "earth": {
+    "value": "Bumi"
+  },
+  "earthDays": {
+    "value": "Hari di Bumi"
+  },
+  "pattern.0value.1units": {
+    "value": "{0} {1}"
+  },
+  "planet": {
+    "value": "Planet"
+  },
+  "planetMass": {
+    "value": "Planet Mass"
+  },
+  "satellite": {
+    "value": "Satellite"
+  },
+  "satelliteMass": {
+    "value": "Satellite Mass"
+  },
+  "star": {
+    "value": "Star"
+  },
+  "starMass": {
+    "value": "Star Mass"
+  },
+  "moon": {
+    "value": "Moon"
+  },
+  "moonMass": {
+    "value": "Moon Mass"
+  },
+  "earthMasses": {
+    "value": "Earth masses"
+  },
+  "earthMass": {
+    "value": "Earth mass"
+  },
+  "clear": {
+    "value": "Clear"
+  },
+  "kilometers": {
+    "value": "kilometers"
+  },
+  "thousandEarthMasses": {
+    "value": "thousand Earth masses"
+  },
+  "v": {
+    "value": "V"
+  },
+  "returnObjects": {
+    "value": "Return Objects"
+  },
+  "gravity": {
+    "value": "Gravity:"
+  },
+  "gravityForce": {
+    "value": "Gravity Force"
+  },
+  "off": {
+    "value": "off"
+  },
+  "on": {
+    "value": "on"
+  },
+  "velocity": {
+    "value": "Velocity"
+  },
+  "mass": {
+    "value": "Mass"
+  },
+  "path": {
+    "value": "Path"
+  },
+  "grid": {
+    "value": "Grid"
+  },
+  "measuringTape": {
+    "value": "Measuring Tape"
   }
 }

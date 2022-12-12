@@ -10,20 +10,20 @@ import ScreenView, { ScreenViewOptions } from '../../../../joist/js/ScreenView.j
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import LabTatasuryaConstants from '../../common/LabTatasuryaConstants.js';
 import labTatasurya from '../../labTatasurya.js';
-import LabTatasuryaModel from '../model/LabTatasuryaModel.js';
+import LabTatasuryaModel from '../model/OrbitModel.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 
 type SelfOptions = {
- //TODO add options that are specific to LabTatasuryaScreenView here
+ //TODO add options that are specific to OrbitScreenView here
 };
 
-type LabTatasuryaScreenViewOptions = SelfOptions & ScreenViewOptions;
+type OrbitScreenViewOptions = SelfOptions & ScreenViewOptions;
 
-class LabTatasuryaScreenView extends ScreenView {
+class OrbitScreenView extends ScreenView {
 
-  public constructor( model: LabTatasuryaModel, providedOptions: LabTatasuryaScreenViewOptions ) {
+  public constructor( model: LabTatasuryaModel, providedOptions: OrbitScreenViewOptions ) {
 
-    const options = optionize<LabTatasuryaScreenViewOptions, SelfOptions, ScreenViewOptions>()( {
+    const options = optionize<OrbitScreenViewOptions, SelfOptions, ScreenViewOptions>()( {
 
       //TODO add default values for optional SelfOptions here
 
@@ -61,5 +61,5 @@ class LabTatasuryaScreenView extends ScreenView {
   }
 }
 
-labTatasurya.register( 'LabTatasuryaScreenView', LabTatasuryaScreenView );
-export default LabTatasuryaScreenView;
+labTatasurya.register( 'OrbitScreenView', OrbitScreenView );
+export default OrbitScreenView;

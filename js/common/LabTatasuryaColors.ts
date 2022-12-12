@@ -14,15 +14,48 @@
  * @author Mario (Software Engineer)
  */
 
-import { ProfileColorProperty } from '../../../scenery/js/imports.js';
+import { Color, ProfileColorProperty } from '../../../scenery/js/imports.js';
+import Tandem from '../../../tandem/js/Tandem.js';
 import labTatasurya from '../labTatasurya.js';
 
 const LabTatasuryaColors = {
 
-  // Background color for screens in this sim
-  screenBackgroundColorProperty: new ProfileColorProperty( labTatasurya, 'background', {
-    default: 'white'
-  } )
+  // Color mainly used for background things like panels or text backgrounds
+  backgroundProperty: new ProfileColorProperty( labTatasurya, 'background', {
+    default: 'black',
+    projector: 'white'
+  }, {
+    tandem: Tandem.COLORS.createTandem( 'backgroundColorProperty' )
+  } ),
+  // Color mainly used for foreground things like text
+  foregroundProperty: new ProfileColorProperty( labTatasurya, 'foreground', {
+    default: 'white',
+    projector: 'black'
+  }, {
+    tandem: Tandem.COLORS.createTandem( 'foregroundColorProperty' )
+  } ),
+  measuringTapeTextBackgroundColorProperty: new ProfileColorProperty( labTatasurya, 'measuring tape text background', {
+    default: 'rgba( 0, 0, 0, 0.65 )',
+    projector: 'rgba( 255, 255, 255, 0.65 )'
+  }, {
+    tandem: Tandem.COLORS.createTandem( 'measuringTapeTextBackgroundColorProperty' )
+  } ),
+  bodyLabelIndicatorProperty: new ProfileColorProperty( labTatasurya, 'body label indicator', {
+    default: new Color( 255, 255, 0 ),
+    projector: 'black'
+  }, {
+    tandem: Tandem.COLORS.createTandem( 'labelColorProperty' )
+  } ),
+  controlPanelFillProperty: new ProfileColorProperty( labTatasurya, 'control panel fill', {
+    default: 'black',
+    projector: new Color( 222, 234, 255 )
+  } ),
+  gridIconStrokeColorProperty: new ProfileColorProperty( labTatasurya, 'grid icon stroke', {
+    default: 'gray',
+    projector: 'black'
+  }, {
+    tandem: Tandem.COLORS.createTandem( 'gridIconStrokeColorProperty' )
+  } ),
 };
 
 labTatasurya.register( 'LabTatasuryaColors', LabTatasuryaColors );
