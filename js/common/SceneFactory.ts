@@ -117,7 +117,7 @@ const scaledDays = ( timeProperty: TProperty<number>, tandem: Tandem ) => {
     ], ( time, earthDaysString, patternString ) => {
         const value = ( time / GravityAndOrbitsClock.SECONDS_PER_DAY );
         const fixedValue = Utils.toFixed( value, 0 );
-        return StringUtils.fillIn( patternString, { 0:fixedValue, 1:earthDaysString } );
+        return StringUtils.fillIn( patternString, { daysValue:fixedValue, daysString:earthDaysString } );
     }, {
         tandem: tandem,
         phetioValueType: StringIO
