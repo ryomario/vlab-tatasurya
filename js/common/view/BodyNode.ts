@@ -46,10 +46,11 @@ class BodyNode extends Node {
     * @param tandem
     */
     public constructor( body: Body, labelAngle: number, isPlayingProperty: Property<boolean>, scene: LabTatasuryaScene, tandem: Tandem ) {
+        const userMoveable = body.isMovableProperty.value;
         super( {
-            cursor: 'pointer',
+            cursor: userMoveable ? 'pointer' : null,
             tandem: tandem,
-            pickable: true,
+            pickable: userMoveable,
             phetioInputEnabledPropertyInstrumented: true
         } );
 
@@ -114,7 +115,9 @@ class BodyNode extends Node {
             tandem: tandem.createTandem( 'dragListener' )
         } );
 
-        this.addInputListener( dragListener );
+        if ( userMoveable ) {
+            this.addInputListener( dragListener );
+        }
 
         // create position and diameter listeners so that they can be unlinked for garbage collection and so that anonymous
         // closures are not necessary through multilink
@@ -136,7 +139,9 @@ class BodyNode extends Node {
         Multilink.multilink( [ this.body.diameterProperty, this.modelViewTransformProperty ], this.diameterListener );
 
         this.modelViewTransformListener = ( modelViewTransform: Transform3 ) => dragListener.setTransform( modelViewTransform );
-        this.modelViewTransformProperty.link( this.modelViewTransformListener );
+        if ( userMoveable ) {
+            this.modelViewTransformProperty.link( this.modelViewTransformListener );
+        }
 
         this.modelBoundsListener = dragBounds => {
 
