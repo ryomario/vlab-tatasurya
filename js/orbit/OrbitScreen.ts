@@ -15,9 +15,9 @@ import LabTatasuryaStrings from '../LabTatasuryaStrings.js';
 import ScreenIcon from '../../../joist/js/ScreenIcon.js';
 import { Image } from '../../../scenery/js/imports.js';
 import icon from '../../images/orbit_png.js';
-import LabTatasuryaScreenView from '../common/view/LabTatasuryaScreenView.js';
+import OrbitScreenView from './view/OrbitScreenView.js';
 
-class OrbitScreen extends Screen<OrbitModel, LabTatasuryaScreenView> {
+class OrbitScreen extends Screen<OrbitModel, OrbitScreenView> {
 
   public constructor( providedOptions: ScreenOptions ) {
 
@@ -40,7 +40,7 @@ class OrbitScreen extends Screen<OrbitModel, LabTatasuryaScreenView> {
     const modelTandem = options.tandem.createTandem( 'model' );
     super(
       () => new OrbitModel( modelTandem, viewTandem ),
-      model => new LabTatasuryaScreenView( model, viewTandem ),
+      model => new OrbitScreenView( model, viewTandem ),
       options
     );
   }
