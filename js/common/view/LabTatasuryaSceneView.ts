@@ -74,11 +74,12 @@ class LabTatasuryaSceneView extends Rectangle {
             this.addChild( bodyNode );
             bodyNode.addChild( massReadoutNode );
 
-            const isReturnableProperty = new DerivedProperty( [ body.positionProperty, scene.zoomLevelProperty ], position => {
+
+            const isReturnableProperty = new DerivedProperty( [ body.positionProperty, scene.zoomLevelProperty, body.isCollidedProperty ], ( position, zoomLevel, isCollided ) => {
 
                 // the return objects button should be visible when a body is out of bounds and not at the rewind position
                 const atRewindPosition = bodyNode.body.positionProperty.equalsRewindValue();
-                return !STAGE_SIZE.intersectsBounds( bodyNode.bounds ) && !atRewindPosition;
+                return !STAGE_SIZE.intersectsBounds( bodyNode.bounds ) && !atRewindPosition || isCollided;
             } );
             isReturnableProperties.push( isReturnableProperty );
         } );
