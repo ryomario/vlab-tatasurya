@@ -46,13 +46,13 @@ class EarthMassReadoutNode extends MassReadoutNode {
                 units = earthMassStringProperty.value;
             }
             else if ( earthMasses < 1 ) {
-                value = Utils.toFixed( earthMasses, 2 );
+                value = Number( Utils.toFixed( earthMasses, 2 ) );
                 units = earthMassesStringProperty.value;
             }
             else {
 
                 // Handle showing exactly "1 earth mass" instead of "1 earth masses"
-                value = Utils.toFixed( earthMasses, 2 );
+                value = Number( Utils.toFixed( earthMasses, 2 ) );
                 units = ( earthMasses === 1 ) ? earthMassStringProperty.value : earthMassesStringProperty.value;
             }
             this.stringProperty.value = StringUtils.fillIn( pattern0Value1UnitsStringProperty.value, { value: value, unit: units } );

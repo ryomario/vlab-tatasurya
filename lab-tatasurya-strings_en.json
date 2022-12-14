@@ -25,49 +25,49 @@
     "value": "Massa Planet"
   },
   "satellite": {
-    "value": "Satellite"
+    "value": "Satelit"
   },
   "satelliteMass": {
-    "value": "Satellite Mass"
+    "value": "Massa Satelit"
   },
   "star": {
-    "value": "Star"
+    "value": "Bintang"
   },
   "starMass": {
     "value": "Massa Matahari"
   },
   "moon": {
-    "value": "Moon"
+    "value": "Bulan"
   },
   "moonMass": {
-    "value": "Moon Mass"
+    "value": "Massa Bulan"
   },
   "earthMasses": {
-    "value": "Earth masses"
+    "value": "kali massa Bumi"
   },
   "earthMass": {
-    "value": "Earth mass"
+    "value": "Massa Bumi"
   },
   "clear": {
-    "value": "Clear"
+    "value": "Reset"
   },
   "kilometers": {
-    "value": "kilometers"
+    "value": "kilometer"
   },
   "thousandEarthMasses": {
-    "value": "thousand Earth masses"
+    "value": "ribu kali massa Bumi"
   },
   "v": {
     "value": "V"
   },
   "returnObjects": {
-    "value": "Return Objects"
+    "value": "Kembalikan Object"
   },
   "gravity": {
-    "value": "Gravity:"
+    "value": "Gravitasi:"
   },
   "gravityForce": {
-    "value": "Gravity Force"
+    "value": "Gaya Gravitasi"
   },
   "centeredSystem": {
     "value": "Sistem Terpusat"
@@ -79,10 +79,10 @@
     "value": "on"
   },
   "velocity": {
-    "value": "Velocity"
+    "value": "Percepatan"
   },
   "mass": {
-    "value": "Mass"
+    "value": "Massa"
   },
   "path": {
     "value": "Lintasan"
@@ -91,7 +91,7 @@
     "value": "Grid"
   },
   "measuringTape": {
-    "value": "Measuring Tape"
+    "value": "Pengukur"
   },
   "chooseSettings": {
     "value": "Pilih Pengaturan"
