@@ -16,7 +16,7 @@
     "value": "Hari di Bumi"
   },
   "pattern.0value.1units": {
-    "value": "{{daysValue}} {{daysString}}"
+    "value": "{{value}} {{unit}}"
   },
   "planet": {
     "value": "Planet"

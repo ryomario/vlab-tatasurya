@@ -65,7 +65,7 @@ class LabTatasuryaModel {
         this.showGridProperty = new BooleanProperty( false, { tandem: tandem.createTandem( 'showGridProperty' ) } );
 
         // The following 2 tandems should not appear in the "Model" screen
-        this.showMassProperty = new BooleanProperty( false, { tandem: showMassCheckbox ? tandem.createTandem( 'showMassProperty' ) : Tandem.OPTIONAL } );
+        this.showMassProperty = new BooleanProperty( true, { tandem: showMassCheckbox ? tandem.createTandem( 'showMassProperty' ) : Tandem.OPTIONAL } );
         this.showMeasuringTapeProperty = new BooleanProperty( false, { tandem: showMeasuringTape ? tandem.createTandem( 'showMeasuringTapeProperty' ) : Tandem.OPTIONAL } );
 
         assert && assert( phet.joist.sim.selectedScreenProperty, 'sim should exist by now' );
