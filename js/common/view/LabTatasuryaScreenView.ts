@@ -70,7 +70,7 @@ public constructor( model: LabTatasuryaModel, tandem: Tandem ) {
     // add the control panel on top of the canvases
     this.addChild( new VBox( {
         top: this.layoutBounds.top + MARGIN,
-        right: this.layoutBounds.right - MARGIN,
+        left: this.layoutBounds.left + MARGIN,
         spacing: MARGIN,
         stretch: true,
         children: [

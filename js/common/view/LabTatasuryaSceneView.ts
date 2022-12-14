@@ -39,7 +39,7 @@ import ZoomControl from "./ZoomControl.js";
 const SCALE = 0.8; // these numbers come from trying to match the original MLL port of this sim
 const WIDTH = 790 * ( 1 / SCALE );
 const HEIGHT = 618 * ( 1 / SCALE );
-const STAGE_SIZE = new Bounds2( 0, 0, WIDTH, HEIGHT );
+const STAGE_SIZE = Bounds2.rect( 0, 0, WIDTH, HEIGHT );
 const buttonBackgroundColor = new Color( 255, 250, 125 );
 
 class LabTatasuryaSceneView extends Rectangle {
@@ -54,7 +54,8 @@ class LabTatasuryaSceneView extends Rectangle {
         // which performs worse in this case when toggling visibility
         const excludeInvisible = !platform.mobileSafari;
 
-        super( 0, 0, WIDTH, HEIGHT, { scale: SCALE, excludeInvisible: excludeInvisible } );
+        super( STAGE_SIZE.x, STAGE_SIZE.y, STAGE_SIZE.width, STAGE_SIZE.height, { scale: SCALE, excludeInvisible: excludeInvisible } );
+        this.right = 1024;
 
         const bodies = scene.physicsEngine.getBodies();
 
@@ -118,7 +119,7 @@ class LabTatasuryaSceneView extends Rectangle {
             scale: 1.2
         } ), {
             alignBounds: STAGE_SIZE,
-            rightMargin: 50,
+            rightMargin: 100,
             bottomMargin: 20,
             xAlign: 'right',
             yAlign: 'bottom'
@@ -217,9 +218,9 @@ class LabTatasuryaSceneView extends Rectangle {
         anythingReturnableProperty.linkAttribute( returnObjectsButton, 'visible' );
 
         const scaleControl = new ZoomControl( scene.zoomLevelProperty, tandem.createTandem( 'zoomControl' ), {
-            top: STAGE_SIZE.top + 10
+            top: STAGE_SIZE.top + 10,
+            right: STAGE_SIZE.right - 10
         } );
-        scaleControl.left = scaleControl.width / 2;
         this.addChild( scaleControl );
     }
 }
