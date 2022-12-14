@@ -63,6 +63,8 @@ type StringsType = {
   'gravityStringProperty': LinkableProperty<string>;
   'gravityForce': string;
   'gravityForceStringProperty': LinkableProperty<string>;
+  'centeredSystem': string;
+  'centeredSystemStringProperty': LinkableProperty<string>;
   'off': string;
   'offStringProperty': LinkableProperty<string>;
   'on': string;
@@ -77,6 +79,8 @@ type StringsType = {
   'gridStringProperty': LinkableProperty<string>;
   'measuringTape': string;
   'measuringTapeStringProperty': LinkableProperty<string>;
+  'chooseSettings': string;
+  'chooseSettingsStringProperty': LinkableProperty<string>;
 };
 
 const LabTatasuryaStrings = getStringModule( 'LAB_TATASURYA' ) as StringsType;

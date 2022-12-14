@@ -15,7 +15,7 @@ import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import MeasuringTapeNode from '../../../../scenery-phet/js/MeasuringTapeNode.js';
 import PhetColorScheme from '../../../../scenery-phet/js/PhetColorScheme.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { colorProfileProperty, HBox, HBoxOptions, Image, SceneryConstants, Text, TextOptions } from '../../../../scenery/js/imports.js';
+import { colorProfileProperty, HBox, HBoxOptions, HSeparator, Image, SceneryConstants, Text, TextOptions } from '../../../../scenery/js/imports.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import iconMass_png from '../../../images/iconMass_png.js';
 import pathIcon_png from '../../../images/pathIcon_png.js';
@@ -60,25 +60,26 @@ class CheckboxPanel extends VerticalCheckboxGroup {
         property: model.showGravityForceProperty,
         createNode: tandem => new HBox( merge( {
             children: [
-                new Text( LabTatasuryaStrings.gravityForceStringProperty, combineOptions<TextOptions>( { tandem: tandem.createTandem( 'labelText' ) }, TEXT_OPTIONS ) ),
+                new Text( LabTatasuryaStrings.centeredSystemStringProperty, combineOptions<TextOptions>( { tandem: tandem.createTandem( 'labelText' ) }, TEXT_OPTIONS ) ),
                 new ArrowNode( 135, ARROW_Y_COORDINATE, 180, ARROW_Y_COORDINATE, { fill: '#4380C2' } )
             ]
         }, HBOX_OPTIONS ) ),
             tandemName: 'gravityForceCheckbox',
             options: CHECKBOX_OPTIONS
-        }, {
+        },
+        // {
 
-                // velocity checkbox
-                property: model.showVelocityProperty,
-                createNode: tandem => new HBox( merge( {
-                    children: [
-                    new Text( LabTatasuryaStrings.velocityStringProperty, combineOptions<TextOptions>( { tandem: tandem.createTandem( 'labelText' ) }, TEXT_OPTIONS ) ),
-                    new ArrowNode( 95, ARROW_Y_COORDINATE, 140, ARROW_Y_COORDINATE, { fill: PhetColorScheme.VELOCITY } )
-                    ]
-                }, HBOX_OPTIONS ) ),
-                tandemName: 'velocityCheckbox',
-                options: CHECKBOX_OPTIONS
-            }
+        //         // velocity checkbox
+        //         property: model.showVelocityProperty,
+        //         createNode: tandem => new HBox( merge( {
+        //             children: [
+        //             new Text( LabTatasuryaStrings.velocityStringProperty, combineOptions<TextOptions>( { tandem: tandem.createTandem( 'labelText' ) }, TEXT_OPTIONS ) ),
+        //             new ArrowNode( 95, ARROW_Y_COORDINATE, 140, ARROW_Y_COORDINATE, { fill: PhetColorScheme.VELOCITY } )
+        //             ]
+        //         }, HBOX_OPTIONS ) ),
+        //         tandemName: 'velocityCheckbox',
+        //         options: CHECKBOX_OPTIONS
+        //     }
         ];
 
         // mass checkbox
@@ -116,20 +117,20 @@ class CheckboxPanel extends VerticalCheckboxGroup {
         } );
 
         // grid checkbox
-        items.push( {
-            property: model.showGridProperty,
-            tandemName: 'gridCheckbox',
-            createNode: tandem => new HBox( merge( {
-                children: [
-                    new Text( LabTatasuryaStrings.gridStringProperty, combineOptions<TextOptions>( { tandem: tandem.createTandem( 'labelText' ) }, TEXT_OPTIONS ) ),
-                    new GridNode( new Property( ModelViewTransform2.createIdentity() ), 10, new Vector2( 0, 0 ), 1, {
-                        stroke: LabTatasuryaColors.gridIconStrokeColorProperty,
-                        lineWidth: 1.5
-                    } )
-                ]
-            }, HBOX_OPTIONS ) ),
-            options: CHECKBOX_OPTIONS
-        } );
+        // items.push( {
+        //     property: model.showGridProperty,
+        //     tandemName: 'gridCheckbox',
+        //     createNode: tandem => new HBox( merge( {
+        //         children: [
+        //             new Text( LabTatasuryaStrings.gridStringProperty, combineOptions<TextOptions>( { tandem: tandem.createTandem( 'labelText' ) }, TEXT_OPTIONS ) ),
+        //             new GridNode( new Property( ModelViewTransform2.createIdentity() ), 10, new Vector2( 0, 0 ), 1, {
+        //                 stroke: LabTatasuryaColors.gridIconStrokeColorProperty,
+        //                 lineWidth: 1.5
+        //             } )
+        //         ]
+        //     }, HBOX_OPTIONS ) ),
+        //     options: CHECKBOX_OPTIONS
+        // } );
 
         // measuring tape checkbox
         if ( model.showMeasuringTape ) {

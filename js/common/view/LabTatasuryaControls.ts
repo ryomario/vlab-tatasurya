@@ -7,7 +7,7 @@
  */
 
 import merge from '../../../../phet-core/js/merge.js';
-import { HSeparator, VBox } from '../../../../scenery/js/imports.js';
+import { HSeparator, Node, Text, VBox } from '../../../../scenery/js/imports.js';
 import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import LabTatasuryaModel from '../model/LabTatasuryaModel.js';
@@ -17,6 +17,9 @@ import SceneSelectionControls from './SceneSelectionControls.js';
 import GravityControl from './GravityControl.js';
 import CheckboxPanel from './CheckboxPanel.js';
 import labTatasurya from '../../labTatasurya.js';
+import LabTatasuryaStrings from '../../LabTatasuryaStrings.js';
+import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
+import LabTatasuryaColors from '../LabTatasuryaColors.js';
 
 // constants
 const MENU_SECTION_OPTIONS = { x: 5 };
@@ -28,9 +31,17 @@ class LabTatasuryaControls extends VBox {
 public constructor( model: LabTatasuryaModel, screenView: Interruptable, providedOptions?: Partial<LabTatasuryaControlsOptions> ) {
 
     const options: LabTatasuryaControlsOptions = merge( {}, LabTatasuryaConstants.CONTROL_PANEL_OPTIONS, providedOptions ) as unknown as LabTatasuryaControlsOptions;
-
-    const children = [];
-
+    
+    const children = [
+        new Text( LabTatasuryaStrings.chooseSettings, {
+            font: new PhetFont( 16 ),
+            fontWeight: 'bold',
+            fill: LabTatasuryaColors.foregroundProperty,
+            maxWidth: 175,
+        } ) as Node,
+        new HSeparator()
+    ];
+    
     if ( model.getScenes().length > 1 ) {
         children.push(
             new SceneSelectionControls( model.sceneProperty, model.getScenes(), screenView, merge( { tandem: options.tandem.createTandem( 'sceneControl' ) }, MENU_SECTION_OPTIONS ) )

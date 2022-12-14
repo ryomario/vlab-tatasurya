@@ -22,7 +22,7 @@
     "value": "Planet"
   },
   "planetMass": {
-    "value": "Planet Mass"
+    "value": "Massa Planet"
   },
   "satellite": {
     "value": "Satellite"
@@ -34,7 +34,7 @@
     "value": "Star"
   },
   "starMass": {
-    "value": "Star Mass"
+    "value": "Massa Matahari"
   },
   "moon": {
     "value": "Moon"
@@ -69,6 +69,9 @@
   "gravityForce": {
     "value": "Gravity Force"
   },
+  "centeredSystem": {
+    "value": "Sistem Terpusat"
+  },
   "off": {
     "value": "off"
   },
@@ -82,12 +85,15 @@
     "value": "Mass"
   },
   "path": {
-    "value": "Path"
+    "value": "Lintasan"
   },
   "grid": {
     "value": "Grid"
   },
   "measuringTape": {
     "value": "Measuring Tape"
+  },
+  "chooseSettings": {
+    "value": "Pilih Pengaturan"
   }
 }
