@@ -14,6 +14,7 @@ import LabTatasuryaStrings from './LabTatasuryaStrings.js';
 import './common/LabTatasuryaQueryParameters.js';
 import { CreditsData } from '../../joist/js/CreditsNode.js';
 import PreferencesModel from '../../joist/js/preferences/PreferencesModel.js';
+import PlanetTatasuryaScreen from './planetTatasurya/PlanetTatasuryaScreen.js';
 
 // Launch the sim. Beware that scenery Image nodes created outside simLauncher.launch() will have zero bounds
 // until the images are fully loaded. See https://github.com/phetsims/coulombs-law/issues/70#issuecomment-429037461
@@ -22,7 +23,8 @@ simLauncher.launch( () => {
   const titleStringProperty = LabTatasuryaStrings[ 'lab-tatasurya' ].titleStringProperty;
 
   const screens = [
-    new LabTatasuryaScreen( { tandem: Tandem.ROOT.createTandem( 'labTatasuryaScreen' ) } )
+    new LabTatasuryaScreen( { tandem: Tandem.ROOT.createTandem( 'orbitScreen' ) } ),
+    new PlanetTatasuryaScreen( { tandem: Tandem.ROOT.createTandem( 'planetTatasuryaScreen' ) } ),
   ];
 
   const options: SimOptions = {

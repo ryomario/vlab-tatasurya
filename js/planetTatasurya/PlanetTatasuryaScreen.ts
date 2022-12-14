@@ -10,19 +10,19 @@ import Screen, { ScreenOptions } from '../../../joist/js/Screen.js';
 import optionize, { EmptySelfOptions } from '../../../phet-core/js/optionize.js';
 import LabTatasuryaColors from '../common/LabTatasuryaColors.js';
 import labTatasurya from '../labTatasurya.js';
-import OrbitModel from './model/OrbitModel.js';
+import PlanetTatasuryaModel from './model/PlanetTatasuryaModel.js';
 import LabTatasuryaStrings from '../LabTatasuryaStrings.js';
 import ScreenIcon from '../../../joist/js/ScreenIcon.js';
 import { Image } from '../../../scenery/js/imports.js';
 import icon from '../../images/orbit_png.js';
-import OrbitScreenView from './view/OrbitScreenView.js';
+import PlanetTatasuryaScreenView from './view/PlanetTatasuryaScreenView.js';
 
-class OrbitScreen extends Screen<OrbitModel, OrbitScreenView> {
+class PlanetTatasuryaScreen extends Screen<PlanetTatasuryaModel, PlanetTatasuryaScreenView> {
 
   public constructor( providedOptions: ScreenOptions ) {
 
     const options = optionize<ScreenOptions, EmptySelfOptions, ScreenOptions>()( {
-      name: LabTatasuryaStrings.screen.orbitNameStringProperty,
+      name: LabTatasuryaStrings.screen.planetTatasuryaNameStringProperty,
 
       //TODO add default values for optional SelfOptions here
 
@@ -39,12 +39,12 @@ class OrbitScreen extends Screen<OrbitModel, OrbitScreenView> {
     const viewTandem = options.tandem.createTandem( 'view' );
     const modelTandem = options.tandem.createTandem( 'model' );
     super(
-      () => new OrbitModel( modelTandem, viewTandem ),
-      model => new OrbitScreenView( model, viewTandem ),
+      () => new PlanetTatasuryaModel( modelTandem, viewTandem ),
+      model => new PlanetTatasuryaScreenView( model, viewTandem ),
       options
     );
   }
 }
 
-labTatasurya.register( 'OrbitScreen', OrbitScreen );
-export default OrbitScreen;
+labTatasurya.register( 'PlanetTatasuryaScreen', PlanetTatasuryaScreen );
+export default PlanetTatasuryaScreen;

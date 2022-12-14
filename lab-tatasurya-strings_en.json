@@ -2,8 +2,11 @@
   "lab-tatasurya.title": {
     "value": "Lab Tatasurya"
   },
-  "screen.name": {
-    "value": "Lab Tatasurya"
+  "screen.orbitName": {
+    "value": "Orbit Planet"
+  },
+  "screen.planetTatasuryaName": {
+    "value": "Planet Tatasurya"
   },
 
   "ourSun": {

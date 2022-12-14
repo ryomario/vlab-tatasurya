@@ -14,8 +14,10 @@ type StringsType = {
     'titleStringProperty': LinkableProperty<string>;
   };
   'screen': {
-    'name': string;
-    'nameStringProperty': LinkableProperty<string>;
+    'orbitName': string;
+    'orbitNameStringProperty': LinkableProperty<string>;
+    'planetTatasuryaName': string;
+    'planetTatasuryaNameStringProperty': LinkableProperty<string>;
   };
   'ourSun': string;
   'ourSunStringProperty': LinkableProperty<string>;
