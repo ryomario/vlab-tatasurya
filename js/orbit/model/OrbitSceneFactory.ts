@@ -17,7 +17,7 @@ import labTatasurya from "../../labTatasurya.js";
 
 // constants
 const SUN_RADIUS_MULTIPLIER = 50; // sun radius multiplier for SunEarthMode and SunEarthMoonMode, tuned by hand
-const EARTH_MOON_RADIUS_MULTIPLIER = 800; // earth and moon radius multiplier for SunEarthMode and SunEarthMoonMode, tuned by hand
+const EARTH_MOON_RADIUS_MULTIPLIER = 2000; // earth and moon radius multiplier for SunEarthMode and SunEarthMoonMode, tuned by hand
 
 /**
  * Convenience function that converts days to seconds, using days * hoursPerDay * minutesPerHour * secondsPerMinute
