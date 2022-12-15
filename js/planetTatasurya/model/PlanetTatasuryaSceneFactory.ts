@@ -17,7 +17,7 @@ import labTatasurya from "../../labTatasurya.js";
 
 // constants
 const SUN_RADIUS_MULTIPLIER = 50; // sun radius multiplier for SunEarthMode and SunEarthMoonMode, tuned by hand
-const EARTH_MOON_RADIUS_MULTIPLIER = 2000; // earth and moon radius multiplier for SunEarthMode and SunEarthMoonMode, tuned by hand
+const EARTH_MOON_RADIUS_MULTIPLIER = 500; // earth and moon radius multiplier for SunEarthMode and SunEarthMoonMode, tuned by hand
 
 /**
  * Convenience function that converts days to seconds, using days * hoursPerDay * minutesPerHour * secondsPerMinute
@@ -31,12 +31,31 @@ class PlanetTatasuryaSceneFactory extends SceneFactory {
             model,
             modelTandem, viewTandem, {
                 sunEarth: new SunEarthModeConfig(),
+                allPlanet: new AllPlanetModeConfig(),
             }
         );
     }
 }
 
 labTatasurya.register( 'PlanetTatasuryaSceneFactory', PlanetTatasuryaSceneFactory );
+
+/**
+ * Model configuration for a system with the sun and the earth.
+ */
+ class AllPlanetModeConfig extends SceneFactory.AllPlanetModeConfig {
+    public constructor() {
+        super();
+        this.sun.radius *= SUN_RADIUS_MULTIPLIER;
+        this.planets.forEach( planetConf => {
+            planetConf.radius *= EARTH_MOON_RADIUS_MULTIPLIER;
+        } );
+
+        // Sun shouldn't move in model modes
+        this.sun.isMovable = false;
+    }
+}
+
+labTatasurya.register( 'AllPlanetModeConfig', AllPlanetModeConfig );
 
 /**
  * Model configuration for a system with the sun and the earth.

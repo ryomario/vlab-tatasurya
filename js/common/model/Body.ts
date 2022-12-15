@@ -197,7 +197,7 @@ class Body extends PhetioObject {
                                    this.type === 'satellite' ? LabTatasuryaStrings.satelliteStringProperty :
                                    this.type === 'star' ? LabTatasuryaStrings.starStringProperty :
                                    this.type === 'moon' ? LabTatasuryaStrings.moonStringProperty :
-                                   null;
+                                   tickLabelProperty;
         assert && assert( this.labelStringProperty, `no label found for body with identifier ${this.type}` );
 
         assert && assert( renderer !== null );

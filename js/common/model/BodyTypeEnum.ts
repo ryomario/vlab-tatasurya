@@ -6,5 +6,5 @@
  * @author Jesse Greenberg (PhET Interactive Simulations)
  */
 
-type BodyTypeEnum = 'planet' | 'satellite' | 'star' | 'moon';
+type BodyTypeEnum = 'planet' | 'satellite' | 'star' | 'moon' | '';
 export default  BodyTypeEnum;

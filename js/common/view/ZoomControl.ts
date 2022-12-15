@@ -19,6 +19,7 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import labTatasurya from '../../labTatasurya.js';
 import LabTatasuryaConstants from '../LabTatasuryaConstants.js';
+import { RangedProperty } from '../../../../axon/js/NumberProperty.js';
 
 // constants
 const TRACK_SIZE = new Dimension2( 3, 140 );
@@ -26,7 +27,11 @@ const THUMB_SIZE = new Dimension2( 28, 20 );
 const STEP = 0.1;
 const BUTTON_SIZE = 25;
 
-type ZoomControlOptions = NodeOptions;
+type SelfOptions = {
+    scaleRange?: Range;
+};
+
+type ZoomControlOptions = SelfOptions & NodeOptions;
 
 class ZoomControl extends Node {
 
@@ -37,16 +42,17 @@ class ZoomControl extends Node {
      */
     public constructor( scaleProperty: Property<number>, tandem: Tandem, providedOptions?: ZoomControlOptions ) {
 
-        const options = optionize<ZoomControlOptions, EmptySelfOptions, NodeOptions>()( {
+        const options = optionize<ZoomControlOptions, SelfOptions, NodeOptions>()( {
             scale: 0.8,
             tandem: tandem,
             phetioEnabledPropertyInstrumented: true,
-            disabledOpacity: SceneryConstants.DISABLED_OPACITY
+            disabledOpacity: SceneryConstants.DISABLED_OPACITY,
+            scaleRange: (scaleProperty as RangedProperty)?.range || LabTatasuryaConstants.ZOOM_RANGE
         }, providedOptions );
 
         super();
 
-        const slider = new VSlider( scaleProperty, LabTatasuryaConstants.ZOOM_RANGE, {
+        const slider = new VSlider( scaleProperty, options.scaleRange, {
             trackSize: TRACK_SIZE,
             thumbSize: THUMB_SIZE,
 
@@ -66,14 +72,14 @@ class ZoomControl extends Node {
         // Add buttons last so their hit areas will be in front for overlapping touch areas on touch devices
 
         // add plus button
-        const plusButton = new SliderButton( scaleProperty, LabTatasuryaConstants.ZOOM_RANGE, STEP, true, {
+        const plusButton = new SliderButton( scaleProperty, options.scaleRange, STEP, true, {
             tandem: tandem.createTandem( 'plusButton' )
         } );
         plusButton.centerBottom = slider.centerTop;
         this.addChild( plusButton );
 
         // add minus button
-        const minusButton = new SliderButton( scaleProperty, LabTatasuryaConstants.ZOOM_RANGE, STEP, false, {
+        const minusButton = new SliderButton( scaleProperty, options.scaleRange, STEP, false, {
             tandem: tandem.createTandem( 'minusButton' )
         } );
         minusButton.centerTop = slider.centerBottom;

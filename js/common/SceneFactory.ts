@@ -17,6 +17,7 @@ import Tandem from '../../../tandem/js/Tandem.js';
 import LabTatasuryaConstants from './LabTatasuryaConstants.js';
 import sun_png from '../../images/Matahari_png.js';
 import earth_png from '../../images/Bumi_png.js';
+import allPlanet_png from '../../images/orbit_png.js';
 import planetGeneric_png from '../../images/Bulan_png.js';
 import LabTatasuryaStrings from '../LabTatasuryaStrings.js';
 import TProperty from '../../../axon/js/TProperty.js';
@@ -36,12 +37,17 @@ import ModeConfig from './model/ModeConfig.js';
 import BodyConfiguration from './model/BodyConfiguration.js';
 import { ImageRenderer, SwitchableBodyRenderer } from './view/BodyRenderer.js';
 import Body, { BodyOptions } from './model/Body.js';
+import Property from '../../../axon/js/Property.js';
 
 // CONSTANTS
 const FORCE_SCALE = VectorNode.FORCE_SCALE;
 
+type PlanetName = 'all' | 'mercury' | 'venus' | 'earth' | 'mars' | 'jupiter' | 'saturn' | 'uranus' | 'neptune';
+
 type SelfOptions = {
-    sunEarth?: SunEarthModeConfig;
+    allPlanet?: AllPlanetModeConfig | null;
+    planetVisibility?: PlanetName[];
+    sunEarth?: SunEarthModeConfig | null;
     adjustMoonPathLength?: boolean;
     adjustMoonOrbit?: boolean;
 };
@@ -51,42 +57,94 @@ type SceneFactoryOptions = SelfOptions;
 class SceneFactory {
     public readonly scenes: LabTatasuryaScene[];
     public static SunEarthModeConfig: typeof SunEarthModeConfig;
+    public static AllPlanetModeConfig: typeof AllPlanetModeConfig;
 
     public constructor( model: LabTatasuryaModel, modelTandem: Tandem, viewTandem: Tandem, providedOptions?: SceneFactoryOptions ) {
         const options = optionize<SceneFactoryOptions, SelfOptions>()( {
-            sunEarth: new SunEarthModeConfig(),
+            allPlanet: null,
+            sunEarth: null,
+            planetVisibility: ['earth'],
+
             adjustMoonPathLength: false, // increase the moon path so that it matches other traces at default settings
             adjustMoonOrbit: false,
         }, providedOptions );
 
         this.scenes = [];
 
-        options.sunEarth.center();
+        options.allPlanet?.center();
+        options.sunEarth?.center();
 
         const readoutInEarthMasses = ( bodyNode: BodyNode, visibleProperty: TReadOnlyProperty<boolean> ) => new EarthMassReadoutNode( bodyNode, visibleProperty );
 
         // Create the actual modes (GravityAndOrbitsModes) from the specifications passed in (ModeConfigs).
         const SUN_MODES_VELOCITY_SCALE = 4.48E6;
-        const starPlanetSceneTandem = modelTandem.createTandem( 'starPlanetScene' );
+        if ( options.allPlanet ) {
+            const starPlanetSceneTandem = modelTandem.createTandem( 'allPlanetsScene' );
 
-        const star0 = new Star( model, options.sunEarth.sun, starPlanetSceneTandem.createTandem( 'star' ), {
-            maxPathLength: 345608942000 // in km
-        } );
-        const planet0 = new Planet( model, options.sunEarth.planet, starPlanetSceneTandem.createTandem( 'planet' ) );
+            const star = new Star( model, options.allPlanet.sun, starPlanetSceneTandem.createTandem( 'star' ), {
+                maxPathLength: 345608942000, // in km
+                massSettable: false,
+            } );
+            const planets: Planet[] = [];
+            const pairs: Pair[] = [];
 
-        this.scenes.push( new LabTatasuryaScene(
-            model,
-            options.sunEarth,
-            scaledDays,
-            this.createIconImage( [ sun_png, earth_png ] ),
-            SUN_MODES_VELOCITY_SCALE,
-            readoutInEarthMasses,
-            options.sunEarth.planet.x / 2,
-            starPlanetSceneTandem,
-            viewTandem.createTandem( LabTatasuryaConstants.PLAY_AREA_TANDEM_NAME ).createTandem( 'starPlanetSceneView' ),
-            [ star0, planet0 ],
-            [ new Pair( star0, planet0, starPlanetSceneTandem.createTandem( 'starPlanetPair' ) ) ]
-        ) );
+            options.allPlanet.planets.forEach( ( planetConf, idx ) => {
+                const planet = new Planet(
+                    model,
+                    planetConf,
+                    starPlanetSceneTandem.createTandem( 'planet'+idx ),
+                    {
+                        massSettable: false,
+                        massReadoutBelow: false,
+                    }
+                );
+
+                planets.push( planet );
+                pairs.push(
+                    new Pair( star, planet, starPlanetSceneTandem.createTandem( 'planet'+idx+'Pair' ) )
+                );
+            } );
+
+            this.scenes.push( new LabTatasuryaScene(
+                model,
+                options.allPlanet,
+                scaledDays,
+                this.createIconImage( [ allPlanet_png ] ),
+                SUN_MODES_VELOCITY_SCALE,
+                readoutInEarthMasses,
+                options.allPlanet.planets[0].x / 2,
+                starPlanetSceneTandem,
+                viewTandem.createTandem( LabTatasuryaConstants.PLAY_AREA_TANDEM_NAME ).createTandem( 'allPlanetSceneView' ),
+                [ star, ...planets ],
+                pairs,
+                {
+                    adjustZoomRange: true,
+                }
+            ) );
+        }
+
+        if ( options.sunEarth ) {
+            const starPlanetSceneTandem = modelTandem.createTandem( 'suhEarthScene' );
+    
+            const star0 = new Star( model, options.sunEarth.sun, starPlanetSceneTandem.createTandem( 'star' ), {
+                maxPathLength: 345608942000 // in km
+            } );
+            const planet0 = new Planet( model, options.sunEarth.planet, starPlanetSceneTandem.createTandem( 'planet' ) );
+    
+            this.scenes.push( new LabTatasuryaScene(
+                model,
+                options.sunEarth,
+                scaledDays,
+                this.createIconImage( [ sun_png, earth_png ] ),
+                SUN_MODES_VELOCITY_SCALE,
+                readoutInEarthMasses,
+                options.sunEarth.planet.x / 2,
+                starPlanetSceneTandem,
+                viewTandem.createTandem( LabTatasuryaConstants.PLAY_AREA_TANDEM_NAME ).createTandem( 'starPlanetSceneView' ),
+                [ star0, planet0 ],
+                [ new Pair( star0, planet0, starPlanetSceneTandem.createTandem( 'starPlanetPair' ) ) ]
+            ) );
+        }
 
 
     }
@@ -124,6 +182,136 @@ const scaledDays = ( timeProperty: TProperty<number>, tandem: Tandem ) => {
     } );
 };
   
+class AllPlanetModeConfig extends ModeConfig {
+    public readonly sun: BodyConfiguration;
+    public readonly planets: BodyConfiguration[];
+
+    public constructor() {
+        super( 0.5 );
+
+        this.sun = new BodyConfiguration(
+            LabTatasuryaConstants.SUN_MASS,
+            LabTatasuryaConstants.SUN_RADIUS,
+            0, 0, 0, 0,
+            {
+                bodyName: 'Sun',
+            }
+        );
+
+        this.planets = [];
+
+        // Merkurius
+        this.planets.push( new BodyConfiguration(
+            LabTatasuryaConstants.MERCURY_MASS,
+            LabTatasuryaConstants.MERCURY_RADIUS,
+            LabTatasuryaConstants.MERCURY_PERIHELION,
+            0,
+            0,
+            LabTatasuryaConstants.MERCURY_ORBITAL_SPEED_AT_PERIHELION,
+            {
+                bodyName: 'Merkurius'
+            }
+        ) );
+        // Venus
+        this.planets.push( new BodyConfiguration(
+            LabTatasuryaConstants.VENUS_MASS,
+            LabTatasuryaConstants.VENUS_RADIUS,
+            LabTatasuryaConstants.VENUS_PERIHELION,
+            0,
+            0,
+            LabTatasuryaConstants.VENUS_ORBITAL_SPEED_AT_PERIHELION,
+            {
+                bodyName: 'Venus'
+            }
+        ) );
+        // Bumi
+        this.planets.push( new BodyConfiguration(
+            LabTatasuryaConstants.EARTH_MASS,
+            LabTatasuryaConstants.EARTH_RADIUS,
+            LabTatasuryaConstants.EARTH_PERIHELION,
+            0,
+            0,
+            LabTatasuryaConstants.EARTH_ORBITAL_SPEED_AT_PERIHELION,
+            {
+                bodyName: 'Bumi'
+            }
+        ) );
+        // Mars
+        this.planets.push( new BodyConfiguration(
+            LabTatasuryaConstants.MARS_MASS,
+            LabTatasuryaConstants.MARS_RADIUS,
+            LabTatasuryaConstants.MARS_PERIHELION,
+            0,
+            0,
+            LabTatasuryaConstants.MARS_ORBITAL_SPEED_AT_PERIHELION,
+            {
+                bodyName: 'Mars'
+            }
+        ) );
+        // Jupiter
+        this.planets.push( new BodyConfiguration(
+            LabTatasuryaConstants.JUPITER_MASS,
+            LabTatasuryaConstants.JUPITER_RADIUS,
+            LabTatasuryaConstants.JUPITER_PERIHELION,
+            0,
+            0,
+            LabTatasuryaConstants.JUPITER_ORBITAL_SPEED_AT_PERIHELION,
+            {
+                bodyName: 'Jupiter'
+            }
+        ) );
+        // Saturnus
+        this.planets.push( new BodyConfiguration(
+            LabTatasuryaConstants.SATURN_MASS,
+            LabTatasuryaConstants.SATURN_RADIUS,
+            LabTatasuryaConstants.SATURN_PERIHELION,
+            0,
+            0,
+            LabTatasuryaConstants.SATURN_ORBITAL_SPEED_AT_PERIHELION,
+            {
+                bodyName: 'Saturnus'
+            }
+        ) );
+        // Uranus
+        this.planets.push( new BodyConfiguration(
+            LabTatasuryaConstants.URANUS_MASS,
+            LabTatasuryaConstants.URANUS_RADIUS,
+            LabTatasuryaConstants.URANUS_PERIHELION,
+            0,
+            0,
+            LabTatasuryaConstants.URANUS_ORBITAL_SPEED_AT_PERIHELION,
+            {
+                bodyName: 'Uranus'
+            }
+        ) );
+        // Neptunus
+        this.planets.push( new BodyConfiguration(
+            LabTatasuryaConstants.NEPTUNE_MASS,
+            LabTatasuryaConstants.NEPTUNE_RADIUS,
+            LabTatasuryaConstants.NEPTUNE_PERIHELION,
+            0,
+            0,
+            LabTatasuryaConstants.NEPTUNE_ORBITAL_SPEED_AT_PERIHELION,
+            {
+                bodyName: 'Neptunus'
+            }
+        ) );
+
+        this.initialMeasuringTapePosition = new Line(
+            // ( this.sun.x + this.planets[this.planets.length - 1].x ) / 3, // x start from
+            // -this.planets[this.planets.length - 1].x / 2,
+            // ( this.sun.x + this.planets[this.planets.length - 1].x ) / 3 + 8E7 * 1000,
+            // -this.planets[this.planets.length - 1].x / 2
+            0, 0, 0, 0
+        );
+
+        this.forceScale = FORCE_SCALE * 120;
+    }
+
+    protected getBodies(): BodyConfiguration[] {
+        return [ this.sun, ...this.planets ];
+    }
+}
 
 class SunEarthModeConfig extends ModeConfig {
     public readonly sun: BodyConfiguration;
@@ -192,14 +380,14 @@ class Planet extends Body {
    */
   public constructor( model: LabTatasuryaModel, bodyConfiguration: BodyConfiguration, tandem: Tandem, options?: PlanetOptions ) {
     super(
-      'planet',
+      '',
       bodyConfiguration,
       Color.gray,
       Color.lightGray,
-      getSwitchableRenderer( earth_png, planetGeneric_png, bodyConfiguration.mass ),
+      getImageRenderer( earth_png ),
       -Math.PI / 4,
       bodyConfiguration.mass,
-      LabTatasuryaStrings.earthStringProperty,
+      new Property( bodyConfiguration.bodyName, { phetioReadOnly: true } ),
       model,
       tandem,
       options
@@ -218,7 +406,7 @@ class Star extends Body {
             getImageRenderer( sun_png ),
             -Math.PI / 4,
             bodyConfiguration.mass,
-            LabTatasuryaStrings.ourSunStringProperty,
+            new Property( bodyConfiguration.bodyName, { phetioReadOnly: true } ),
             model,
             tandem,
             options
@@ -227,6 +415,7 @@ class Star extends Body {
 }
 
 SceneFactory.SunEarthModeConfig = SunEarthModeConfig;
+SceneFactory.AllPlanetModeConfig = AllPlanetModeConfig;
 
 labTatasurya.register( 'SceneFactory', SceneFactory );
 export default SceneFactory;

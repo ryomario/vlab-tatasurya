@@ -17,6 +17,7 @@ import labTatasurya from "../../labTatasurya.js";
 
 type BodyConfigurationOptions = {
     rotationPeriod?: null | number;
+    bodyName?: string;
 }
 
 class BodyConfiguration {
@@ -29,9 +30,12 @@ class BodyConfiguration {
     public isMovable: boolean;
     public readonly rotationPeriod: null | number;
 
+    public bodyName: string;
+
     public constructor( mass: number, radius: number, x: number, y: number, vx: number, vy: number, providedOptions?: BodyConfigurationOptions ) {
         const options = optionize<BodyConfigurationOptions>()( {
             rotationPeriod: null, // period of rotation, in seconds - null corresponds to no rotation
+            bodyName: 'Planet',
         }, providedOptions ) as Required<BodyConfigurationOptions>;
 
         this.isMovable = true;  // True if the object moves based on physics (even non-isMovable things can be dragged though)
@@ -42,6 +46,8 @@ class BodyConfiguration {
         this.vx = vx;
         this.vy = vy;
         this.rotationPeriod = options.rotationPeriod;
+
+        this.bodyName = options.bodyName;
     }
 
     public getMomentum(): Vector2 {

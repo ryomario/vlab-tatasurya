@@ -19,6 +19,9 @@ class OrbitModel extends LabTatasuryaModel {
       0,
       modelTandem
     );
+
+    this.showMassProperty.setInitialValue( false );
+    this.showMassProperty.set( false );
   }
 }
 

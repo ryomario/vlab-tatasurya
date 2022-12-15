@@ -25,6 +25,7 @@ import Property from "../../../axon/js/Property.js";
 import TProperty from "../../../axon/js/TProperty.js";
 import TReadOnlyProperty from "../../../axon/js/TReadOnlyProperty.js";
 import Bounds2 from "../../../dot/js/Bounds2.js";
+import Range from "../../../dot/js/Range.js";
 import Rectangle from "../../../dot/js/Rectangle.js";
 import Vector2 from "../../../dot/js/Vector2.js";
 import Vector2Property from "../../../dot/js/Vector2Property.js";
@@ -56,6 +57,7 @@ type SelfOptions = {
     adjustMoonOrbit?: boolean;
     dt?: number;
     gridCenter?: Vector2;
+    adjustZoomRange?: boolean;
 };
 type LabTatasuryaSceneOptions = SelfOptions & PhetioObjectOptions;
 type MeasuringTapeOptions = {
@@ -63,7 +65,7 @@ type MeasuringTapeOptions = {
     units?: string;
 };
 
-type LabTatasuryaSceneImplementationOptions = Pick<LabTatasuryaSceneOptions, 'adjustMoonOrbit' | 'dt' | 'gridCenter'>;
+type LabTatasuryaSceneImplementationOptions = Pick<LabTatasuryaSceneOptions, 'adjustMoonOrbit' | 'dt' | 'gridCenter' | 'adjustZoomRange'>;
 
 class LabTatasuryaScene extends PhetioObject {
     public readonly activeProperty: BooleanProperty;
@@ -125,7 +127,8 @@ class LabTatasuryaScene extends PhetioObject {
         const options = optionize<LabTatasuryaSceneImplementationOptions>()( {
             gridCenter: new Vector2( 0, 0 ),
             dt: modeConfig.dt,
-            adjustMoonOrbit: false
+            adjustMoonOrbit: false,
+            adjustZoomRange: false,
         }, providedOptions );
         const gridCenter = options.gridCenter;
         const dt = options.dt;
@@ -160,9 +163,11 @@ class LabTatasuryaScene extends PhetioObject {
         this.measuringTapeEndPointProperty = new Vector2Property( initialMeasuringTapePosition.p2, merge( {
             tandem: measuringTapeTandem.createTandem( 'endPointProperty' )
         }, measuringTapePointOptions ) );
-        this.zoomLevelProperty = new NumberProperty( 1, {
+        let range = new Range( 0.12, 3 );
+        if ( !options.adjustZoomRange ) range = LabTatasuryaConstants.ZOOM_RANGE;
+        this.zoomLevelProperty = new NumberProperty( options.adjustZoomRange ? 2 : 1, {
             tandem: tandem.createTandem( 'zoomLevelProperty' ),
-            range: LabTatasuryaConstants.ZOOM_RANGE
+            range: range
         } );
 
         this.radioButtonTandemName = radioButtonTandemName; // (read-only)
