@@ -91,13 +91,17 @@ class LabTatasuryaPhysicsEngine {
                             this.clock.timeSpeedProperty.value === TimeSpeed.NORMAL ? 4 :
                             7; // TimeSpeed.FAST
         // step the model by the smallest standard time step for the orbital mode
-        for ( let i = 0; i < numberOfSteps; i++ ) {
-            this.step( smallestTimeStep );
+        // for ( let i = 0; i < numberOfSteps; i++ ) {
+        //     this.step( smallestTimeStep );
 
-            // Signify that the model completed an entire step so that any batch operations may be invoked
-            for ( let i = 0; i < this.bodies.length; i++ ) {
-                this.bodies[ i ].modelStepped();
-            }
+        //     // Signify that the model completed an entire step so that any batch operations may be invoked
+        //     for ( let i = 0; i < this.bodies.length; i++ ) {
+        //         this.bodies[ i ].modelStepped();
+        //     }
+        // }
+        this.step( smallestTimeStep * numberOfSteps );
+        for ( let i = 0; i < this.bodies.length; i++ ) {
+            this.bodies[ i ].modelStepped();
         }
 
         this.stepCompleteEmitter.emit();
