@@ -28,22 +28,20 @@ import Rectangle from "../../../dot/js/Rectangle.js";
 import Vector2 from "../../../dot/js/Vector2.js";
 import Vector2Property from "../../../dot/js/Vector2Property.js";
 import GravityAndOrbitsClock from "../../../gravity-and-orbits/js/common/model/GravityAndOrbitsClock.js";
-import merge from "../../../phet-core/js/merge.js";
 import ModelViewTransform2 from "../../../phetcommon/js/view/ModelViewTransform2.js";
 import TimeSpeed from "../../../scenery-phet/js/TimeSpeed.js";
 import { Node } from "../../../scenery/js/imports.js";
-import PhetioObject, { PhetioObjectOptions } from "../../../tandem/js/PhetioObject.js";
+import PhetioObject from "../../../tandem/js/PhetioObject.js";
 import Tandem from "../../../tandem/js/Tandem.js";
 import labTatasurya from "../labTatasurya.js";
 import Body from "./model/Body.js";
 import LabTatasuryaPhysicsEngine from "./model/LabTatasuryaPhysicsEngine.js";
-import Pair from "./model/Pair.js";
 import BodyNode from "./view/BodyNode.js";
-import LabTatasuryaSceneView from "./view/LabTatasuryaSceneView.js";
+import SceneView from "./view/SceneView.js";
 
 // constants
-const PLAY_AREA_WIDTH = LabTatasuryaSceneView.STAGE_SIZE.width;
-const PLAY_AREA_HEIGHT = LabTatasuryaSceneView.STAGE_SIZE.height;
+const PLAY_AREA_WIDTH = SceneView.STAGE_SIZE.width;
+const PLAY_AREA_HEIGHT = SceneView.STAGE_SIZE.height;
 
 abstract class Scene extends PhetioObject {
     public abstract readonly activeProperty: BooleanProperty;
@@ -52,7 +50,7 @@ abstract class Scene extends PhetioObject {
     public abstract readonly transformProperty: Property<ModelViewTransform2>;
     public abstract readonly radioButtonTandemName: string;
     public abstract readonly resetButtonTandemName: string;
-    public abstract readonly sceneView: LabTatasuryaSceneView;
+    public abstract readonly sceneView: SceneView;
     public abstract readonly massControlPanelTandemName: string;
     public abstract readonly forceScale: number;
     public abstract readonly physicsEngine: LabTatasuryaPhysicsEngine;

@@ -48,10 +48,11 @@ import Multilink from "../../../axon/js/Multilink.js";
 import Body from "./model/Body.js";
 import labTatasurya from "../labTatasurya.js";
 import merge from "../../../phet-core/js/merge.js";
+import MorePlanetsSceneView from "./view/MorePlanetsSceneView.js";
 
 // constants
-const PLAY_AREA_WIDTH = LabTatasuryaSceneView.STAGE_SIZE.width;
-const PLAY_AREA_HEIGHT = LabTatasuryaSceneView.STAGE_SIZE.height;
+const PLAY_AREA_WIDTH = MorePlanetsSceneView.STAGE_SIZE.width;
+const PLAY_AREA_HEIGHT = MorePlanetsSceneView.STAGE_SIZE.height;
 
 type SelfOptions = {
     dt?: number;
@@ -68,7 +69,7 @@ class MorePlanetsScene extends Scene {
     public readonly transformProperty: Property<ModelViewTransform2>;
     public readonly radioButtonTandemName: string;
     public readonly resetButtonTandemName: string;
-    public readonly sceneView: LabTatasuryaSceneView;
+    public readonly sceneView: MorePlanetsSceneView;
     public readonly massControlPanelTandemName: string;
     public readonly forceScale: number;
     public readonly physicsEngine: LabTatasuryaPhysicsEngine;
@@ -100,6 +101,9 @@ class MorePlanetsScene extends Scene {
         const tandemName = tandem.name;
         const radioButtonTandemName = `${tandemName}RadioButton`;
         const resetButtonTandemName = `${tandemName}ResetButton`;
+
+        model.showGridProperty.setInitialValue( true );
+        model.showGridProperty.set( true );
 
         const options = optionize<MorePlanetsSceneImplementationOptions>()( {
             gridCenter: new Vector2( 0, 0 ),
@@ -182,7 +186,7 @@ class MorePlanetsScene extends Scene {
         bodies.forEach( body => this.addBody( body ) );
 
         // {Node} - scenery node that depicts the play area for this scene
-        this.sceneView = new LabTatasuryaSceneView( this, model, sceneViewTandem );
+        this.sceneView = new MorePlanetsSceneView( this, model, sceneViewTandem );
 
         this.pairs = pairs;
 

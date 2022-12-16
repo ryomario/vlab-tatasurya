@@ -49,6 +49,7 @@ import Pair from "./model/Pair.js";
 import Scene from "./Scene.js";
 import BodyNode from "./view/BodyNode.js";
 import LabTatasuryaSceneView from "./view/LabTatasuryaSceneView.js";
+import SceneView from "./view/SceneView.js";
 
 type SelfOptions = {
     adjustMoonOrbit?: boolean;
@@ -71,7 +72,7 @@ class LabTatasuryaScene extends Scene {
     public readonly transformProperty: Property<ModelViewTransform2>;
     public readonly radioButtonTandemName: string;
     public readonly resetButtonTandemName: string;
-    public readonly sceneView: LabTatasuryaSceneView;
+    public readonly sceneView: SceneView;
     public readonly massControlPanelTandemName: string;
     public readonly forceScale: number;
     public readonly physicsEngine: LabTatasuryaPhysicsEngine;

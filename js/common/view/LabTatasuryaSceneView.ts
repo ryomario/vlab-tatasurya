@@ -13,8 +13,6 @@
 
 import DerivedProperty from "../../../../axon/js/DerivedProperty.js";
 import TReadOnlyProperty from "../../../../axon/js/TReadOnlyProperty.js";
-import Bounds2 from "../../../../dot/js/Bounds2.js";
-import platform from "../../../../phet-core/js/platform.js";
 import GridNode from "../../../../scenery-phet/js/GridNode.js";
 import MeasuringTapeNode from "../../../../scenery-phet/js/MeasuringTapeNode.js";
 import PhetColorScheme from "../../../../scenery-phet/js/PhetColorScheme.js";
@@ -25,42 +23,26 @@ import Tandem from "../../../../tandem/js/Tandem.js";
 import labTatasurya from "../../labTatasurya.js";
 import LabTatasuryaStrings from "../../LabTatasuryaStrings.js";
 import LabTatasuryaColors from "../LabTatasuryaColors.js";
-import LabTatasuryaScene from "../LabTatasuryaScene.js";
 import LabTatasuryaModel from "../model/LabTatasuryaModel.js";
 import Scene from "../Scene.js";
 import BodyNode from "./BodyNode.js";
 import DraggableVectorNode from "./DraggableVectorNode.js";
 import ExplosionNode from "./ExplosionNode.js";
 import PathsCanvasNode from "./PathsCanvasNode.js";
+import SceneView from "./SceneView.js";
 import TimeCounter from "./TimeCounter.js";
 import VectorNode from "./VectorNode.js";
 import ZoomControl from "./ZoomControl.js";
 
-// constants
-const SCALE = 0.8; // these numbers come from trying to match the original MLL port of this sim
-const WIDTH = 790 * ( 1 / SCALE );
-const HEIGHT = 618 * ( 1 / SCALE );
-const STAGE_SIZE = Bounds2.rect( 0, 0, WIDTH, HEIGHT );
-const buttonBackgroundColor = new Color( 255, 250, 125 );
-
-class LabTatasuryaSceneView extends Rectangle {
-    public static readonly STAGE_SIZE = STAGE_SIZE;
-    public static readonly buttonBackgroundColor = buttonBackgroundColor;
-
+class LabTatasuryaSceneView extends SceneView {
     public constructor( scene: Scene, model: LabTatasuryaModel, tandem: Tandem ) {
-        const forceScale = scene.forceScale;
-        
-        // each orbit mode has its own play area with a CanvasNode for rendering paths
-        // each canvas should be excluded from the DOM when invisible, with the exception of iOS Safari,
-        // which performs worse in this case when toggling visibility
-        const excludeInvisible = !platform.mobileSafari;
+        super();
 
-        super( STAGE_SIZE.x, STAGE_SIZE.y, STAGE_SIZE.width, STAGE_SIZE.height, { scale: SCALE, excludeInvisible: excludeInvisible } );
-        this.right = 1024;
+        const forceScale = scene.forceScale;
 
         const bodies = scene.physicsEngine.getBodies();
 
-        this.addChild( new PathsCanvasNode( bodies, scene.transformProperty, model.showPathProperty, STAGE_SIZE ) );
+        this.addChild( new PathsCanvasNode( bodies, scene.transformProperty, model.showPathProperty, LabTatasuryaSceneView.STAGE_SIZE ) );
 
         const forceVectorColorFill = PhetColorScheme.GRAVITATIONAL_FORCE;
         const forceVectorColorOutline = new Color( 64, 64, 64 );
@@ -80,7 +62,7 @@ class LabTatasuryaSceneView extends Rectangle {
 
                 // the return objects button should be visible when a body is out of bounds and not at the rewind position
                 const atRewindPosition = bodyNode.body.positionProperty.equalsRewindValue();
-                return !STAGE_SIZE.intersectsBounds( bodyNode.bounds ) && !atRewindPosition || isCollided;
+                return !LabTatasuryaSceneView.STAGE_SIZE.intersectsBounds( bodyNode.bounds ) && !atRewindPosition || isCollided;
             } );
             isReturnableProperties.push( isReturnableProperty );
         } );
@@ -120,7 +102,7 @@ class LabTatasuryaSceneView extends Rectangle {
         this.addChild( new AlignBox( new TimeCounter( scene.timeFormatter, scene.physicsEngine.clock, tandem.createTandem( 'timeCounter' ), {
             scale: 1.2
         } ), {
-            alignBounds: STAGE_SIZE,
+            alignBounds: LabTatasuryaSceneView.STAGE_SIZE,
             rightMargin: 100,
             bottomMargin: 20,
             xAlign: 'right',
@@ -190,7 +172,7 @@ class LabTatasuryaSceneView extends Rectangle {
 
             // Tell each of the bodies about the stage size (in model coordinates) so they know if they are out of bounds
             for ( let i = 0; i < bodies.length; i++ ) {
-                bodies[ i ].boundsProperty.set( scene.transformProperty.get().viewToModelBounds( STAGE_SIZE ) );
+                bodies[ i ].boundsProperty.set( scene.transformProperty.get().viewToModelBounds( LabTatasuryaSceneView.STAGE_SIZE ) );
             }
         } );
 
@@ -220,8 +202,8 @@ class LabTatasuryaSceneView extends Rectangle {
         anythingReturnableProperty.linkAttribute( returnObjectsButton, 'visible' );
 
         const scaleControl = new ZoomControl( scene.zoomLevelProperty, tandem.createTandem( 'zoomControl' ), {
-            top: STAGE_SIZE.top + 10,
-            right: STAGE_SIZE.right - 10
+            top: LabTatasuryaSceneView.STAGE_SIZE.top + 10,
+            right: LabTatasuryaSceneView.STAGE_SIZE.right - 10
         } );
         this.addChild( scaleControl );
     }

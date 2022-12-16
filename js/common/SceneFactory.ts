@@ -113,7 +113,7 @@ class SceneFactory {
                 scaledDays,
                 this.createIconImage( [ allPlanet_png ] ),
                 SUN_MODES_VELOCITY_SCALE,
-                options.allPlanet.planets[0].x / 2,
+                options.allPlanet.planets[2].x,
                 starPlanetSceneTandem,
                 viewTandem.createTandem( LabTatasuryaConstants.PLAY_AREA_TANDEM_NAME ).createTandem( 'allPlanetSceneView' ),
                 [ star, ...planets ],
