@@ -55,15 +55,18 @@ public constructor( model: LabTatasuryaModel, tandem: Tandem ) {
     model.getScenes().forEach( scene => {
         const sceneView = scene.sceneView;
 
-        const massControlPanel = new MassControlPanel( scene.getMassSettableBodies(), {
+        if ( scene.getMassSettableBodies().length > 0 ) {
+            const massControlPanel = new MassControlPanel( scene.getMassSettableBodies(), {
+    
+                // Nest under massesControlPanel, see https://github.com/phetsims/gravity-and-orbits/issues/284#issuecomment-554106611
+                tandem: massesControlPanelTandem.createTandem( scene.massControlPanelTandemName )
+            } );
+            scene.massControlPanel = massControlPanel;
 
-            // Nest under massesControlPanel, see https://github.com/phetsims/gravity-and-orbits/issues/284#issuecomment-554106611
-            tandem: massesControlPanelTandem.createTandem( scene.massControlPanelTandemName )
-        } );
-        scene.massControlPanel = massControlPanel;
+            massesControlPanel.addChild( massControlPanel );
+        }
 
         playAreaNode.addChild( sceneView );
-        massesControlPanel.addChild( massControlPanel );
     } );
     this.addChild( playAreaNode );
 

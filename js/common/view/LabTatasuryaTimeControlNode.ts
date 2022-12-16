@@ -23,6 +23,7 @@ import LabTatasuryaModel from '../model/LabTatasuryaModel.js';
 import labTatasurya from '../../labTatasurya.js';
 import LabTatasuryaColors from '../LabTatasuryaColors.js';
 import LabTatasuryaScene from '../LabTatasuryaScene.js';
+import Scene from '../Scene.js';
 
 // constants
 const PLAY_PAUSE_BUTTON_RADIUS = 34;
@@ -74,7 +75,7 @@ class LabTatasuryaTimeControlNode extends TimeControlNode {
             } );
         } );
 
-        const anyPropertyDifferentProperty = DerivedProperty.deriveAny( dependencies, ( ...args: LabTatasuryaScene[] ) => {
+        const anyPropertyDifferentProperty = DerivedProperty.deriveAny( dependencies, ( ...args: Scene[] ) => {
             let changed = false;
             model.sceneProperty.value.getBodies().forEach( ( body: Body ) => {
 

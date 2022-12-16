@@ -19,6 +19,7 @@ import Interruptable from '../model/Interruptable.js';
 import labTatasurya from '../../labTatasurya.js';
 import LabTatasuryaScene from '../LabTatasuryaScene.js';
 import LabTatasuryaColors from '../LabTatasuryaColors.js';
+import Scene from '../Scene.js';
 
 type SceneSelectionControlsOptions = {
     tandem: Tandem;
@@ -31,7 +32,7 @@ class SceneSelectionControls extends Node {
     * @param modes
     * @param [providedOptions] - This object contains options for main node of planet menu.
     */
-    public constructor( sceneProperty: Property<LabTatasuryaScene>, modes: LabTatasuryaScene[], screenView: Interruptable, providedOptions?: Partial<SceneSelectionControlsOptions> ) {
+    public constructor( sceneProperty: Property<Scene>, modes: Scene[], screenView: Interruptable, providedOptions?: Partial<SceneSelectionControlsOptions> ) {
         super( providedOptions );
         const options: SceneSelectionControlsOptions = merge( { tandem: Tandem.OPTIONAL }, providedOptions ) as SceneSelectionControlsOptions;
 
@@ -99,13 +100,13 @@ class SceneSelectionControls extends Node {
 labTatasurya.register( 'SceneSelectionControls', SceneSelectionControls );
 
 class SceneResetButton extends RectangularPushButton {
-    public readonly scene: LabTatasuryaScene;
+    public readonly scene: Scene;
 
     /**
     * @param scene
     * @param [providedOptions]
     */
-    public constructor( scene: LabTatasuryaScene, screenView: Interruptable, providedOptions?: RectangularPushButtonOptions ) {
+    public constructor( scene: Scene, screenView: Interruptable, providedOptions?: RectangularPushButtonOptions ) {
         const options = optionize<RectangularPushButtonOptions, EmptySelfOptions, RectangularPushButtonOptions>()( {
             content: new Node( {
                 children: [

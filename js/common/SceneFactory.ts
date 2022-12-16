@@ -38,6 +38,8 @@ import BodyConfiguration from './model/BodyConfiguration.js';
 import { ImageRenderer, SwitchableBodyRenderer } from './view/BodyRenderer.js';
 import Body, { BodyOptions } from './model/Body.js';
 import Property from '../../../axon/js/Property.js';
+import Scene from './Scene.js';
+import MorePlanetsScene from './MorePlanetsScene.js';
 
 // CONSTANTS
 const FORCE_SCALE = VectorNode.FORCE_SCALE;
@@ -55,7 +57,7 @@ type SelfOptions = {
 type SceneFactoryOptions = SelfOptions;
 
 class SceneFactory {
-    public readonly scenes: LabTatasuryaScene[];
+    public readonly scenes: Scene[];
     public static SunEarthModeConfig: typeof SunEarthModeConfig;
     public static AllPlanetModeConfig: typeof AllPlanetModeConfig;
 
@@ -105,21 +107,17 @@ class SceneFactory {
                 );
             } );
 
-            this.scenes.push( new LabTatasuryaScene(
+            this.scenes.push( new MorePlanetsScene(
                 model,
                 options.allPlanet,
                 scaledDays,
                 this.createIconImage( [ allPlanet_png ] ),
                 SUN_MODES_VELOCITY_SCALE,
-                readoutInEarthMasses,
                 options.allPlanet.planets[0].x / 2,
                 starPlanetSceneTandem,
                 viewTandem.createTandem( LabTatasuryaConstants.PLAY_AREA_TANDEM_NAME ).createTandem( 'allPlanetSceneView' ),
                 [ star, ...planets ],
-                pairs,
-                {
-                    adjustZoomRange: true,
-                }
+                pairs
             ) );
         }
 

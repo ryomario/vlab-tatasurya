@@ -27,6 +27,7 @@ import IOType from "../../../../tandem/js/types/IOType.js";
 import ReferenceIO from "../../../../tandem/js/types/ReferenceIO.js";
 import labTatasurya from "../../labTatasurya.js";
 import LabTatasuryaScene from "../LabTatasuryaScene.js";
+import Scene from "../Scene.js";
 import SceneFactory from "../SceneFactory.js";
 
 // constants
@@ -39,7 +40,7 @@ class LabTatasuryaModel {
     public readonly showGridProperty: BooleanProperty;
     public readonly showMassProperty: BooleanProperty;
     public readonly showMeasuringTapeProperty: BooleanProperty;
-    public readonly sceneProperty: Property<LabTatasuryaScene>;
+    public readonly sceneProperty: Property<Scene>;
     public readonly isPlayingProperty: BooleanProperty;
     public readonly timeSpeedProperty: EnumerationProperty<TimeSpeed>;
     public readonly gravityEnabledProperty: BooleanProperty;
@@ -124,7 +125,7 @@ class LabTatasuryaModel {
         }
     }
 
-    public getScenes(): LabTatasuryaScene[] {
+    public getScenes(): Scene[] {
         return this.sceneList.scenes;
     }
 

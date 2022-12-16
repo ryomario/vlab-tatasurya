@@ -27,6 +27,7 @@ import LabTatasuryaStrings from "../../LabTatasuryaStrings.js";
 import LabTatasuryaColors from "../LabTatasuryaColors.js";
 import LabTatasuryaScene from "../LabTatasuryaScene.js";
 import LabTatasuryaModel from "../model/LabTatasuryaModel.js";
+import Scene from "../Scene.js";
 import BodyNode from "./BodyNode.js";
 import DraggableVectorNode from "./DraggableVectorNode.js";
 import ExplosionNode from "./ExplosionNode.js";
@@ -46,7 +47,7 @@ class LabTatasuryaSceneView extends Rectangle {
     public static readonly STAGE_SIZE = STAGE_SIZE;
     public static readonly buttonBackgroundColor = buttonBackgroundColor;
 
-    public constructor( scene: LabTatasuryaScene, model: LabTatasuryaModel, tandem: Tandem ) {
+    public constructor( scene: Scene, model: LabTatasuryaModel, tandem: Tandem ) {
         const forceScale = scene.forceScale;
         
         // each orbit mode has its own play area with a CanvasNode for rendering paths

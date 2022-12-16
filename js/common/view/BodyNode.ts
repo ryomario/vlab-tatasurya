@@ -26,6 +26,7 @@ import Multilink from '../../../../axon/js/Multilink.js';
 import LabTatasuryaScene from '../LabTatasuryaScene.js';
 import LabTatasuryaColors from '../LabTatasuryaColors.js';
 import labTatasurya from '../../labTatasurya.js';
+import Scene from '../Scene.js';
 
 class BodyNode extends Node {
     private readonly modelViewTransformProperty: Property<ModelViewTransform2>;
@@ -45,7 +46,7 @@ class BodyNode extends Node {
     * @param scene
     * @param tandem
     */
-    public constructor( body: Body, labelAngle: number, isPlayingProperty: Property<boolean>, scene: LabTatasuryaScene, tandem: Tandem ) {
+    public constructor( body: Body, labelAngle: number, isPlayingProperty: Property<boolean>, scene: Scene, tandem: Tandem ) {
         const userMoveable = body.isMovableProperty.value;
         super( {
             cursor: userMoveable ? 'pointer' : null,
