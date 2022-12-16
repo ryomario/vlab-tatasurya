@@ -49,7 +49,7 @@ class MorePlanetsSceneView extends SceneView {
 
                 // the return objects button should be visible when a body is out of bounds and not at the rewind position
                 const atRewindPosition = bodyNode.body.positionProperty.equalsRewindValue();
-                return !atRewindPosition || isCollided;
+                return !atRewindPosition && isCollided;
                 // return !MorePlanetsSceneView.STAGE_SIZE.intersectsBounds( bodyNode.bounds ) && !atRewindPosition || isCollided;
             } );
             isReturnableProperties.push( isReturnableProperty );
