@@ -11,13 +11,14 @@
  */
 
 import Tandem from "../../../../tandem/js/Tandem.js";
+import LabTatasuryaConstants from "../../common/LabTatasuryaConstants.js";
 import LabTatasuryaModel from "../../common/model/LabTatasuryaModel.js";
 import SceneFactory from "../../common/SceneFactory.js";
 import labTatasurya from "../../labTatasurya.js";
 
 // constants
 const SUN_RADIUS_MULTIPLIER = 50; // sun radius multiplier for SunEarthMode and SunEarthMoonMode, tuned by hand
-const EARTH_MOON_RADIUS_MULTIPLIER = 500; // earth and moon radius multiplier for SunEarthMode and SunEarthMoonMode, tuned by hand
+const EARTH_MOON_RADIUS_MULTIPLIER = 1000; // earth and moon radius multiplier for SunEarthMode and SunEarthMoonMode, tuned by hand
 
 /**
  * Convenience function that converts days to seconds, using days * hoursPerDay * minutesPerHour * secondsPerMinute
@@ -46,7 +47,7 @@ labTatasurya.register( 'PlanetTatasuryaSceneFactory', PlanetTatasuryaSceneFactor
     public constructor() {
         super();
         this.sun.radius *= SUN_RADIUS_MULTIPLIER;
-        this.planets.forEach( planetConf => {
+        this.planets.forEach( (planetConf, idx ) => {
             planetConf.radius *= EARTH_MOON_RADIUS_MULTIPLIER;
         } );
 

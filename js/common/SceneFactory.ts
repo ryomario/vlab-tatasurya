@@ -179,7 +179,13 @@ const scaledDays = ( timeProperty: TProperty<number>, tandem: Tandem ) => {
         phetioValueType: StringIO
     } );
 };
-  
+
+const getSpeedAtPerihelion = ( R2: number ) => {
+    const v1 = LabTatasuryaConstants.EARTH_ORBITAL_SPEED_AT_PERIHELION;
+    const R1 = LabTatasuryaConstants.EARTH_PERIHELION;
+    return Math.sqrt( R1 / R2 ) * v1;
+}
+
 class AllPlanetModeConfig extends ModeConfig {
     public readonly sun: BodyConfiguration;
     public readonly planets: BodyConfiguration[];
@@ -199,99 +205,121 @@ class AllPlanetModeConfig extends ModeConfig {
         this.planets = [];
 
         // Merkurius
+        const mercuryPerihelion = LabTatasuryaConstants.EARTH_PERIHELION * 0.3;
         this.planets.push( new BodyConfiguration(
             LabTatasuryaConstants.MERCURY_MASS,
-            LabTatasuryaConstants.MERCURY_RADIUS,
-            LabTatasuryaConstants.MERCURY_PERIHELION,
+            LabTatasuryaConstants.MERCURY_RADIUS * 2,
+            mercuryPerihelion,
             0,
             0,
-            LabTatasuryaConstants.MERCURY_ORBITAL_SPEED_AT_PERIHELION,
+            // LabTatasuryaConstants.MERCURY_ORBITAL_SPEED_AT_PERIHELION,
+            getSpeedAtPerihelion( mercuryPerihelion ),
             {
-                bodyName: 'Merkurius'
+                bodyName: 'Merkurius',
+                rotationPeriod: LabTatasuryaConstants.MERCURY_ROTATION_PERIOD
             }
         ) );
         // Venus
+        const venusPerihelion = LabTatasuryaConstants.EARTH_PERIHELION * 0.7;
         this.planets.push( new BodyConfiguration(
             LabTatasuryaConstants.VENUS_MASS,
-            LabTatasuryaConstants.VENUS_RADIUS,
-            LabTatasuryaConstants.VENUS_PERIHELION,
+            LabTatasuryaConstants.VENUS_RADIUS * 1.5,
+            venusPerihelion,
             0,
             0,
-            LabTatasuryaConstants.VENUS_ORBITAL_SPEED_AT_PERIHELION,
+            // LabTatasuryaConstants.VENUS_ORBITAL_SPEED_AT_PERIHELION,
+            getSpeedAtPerihelion( venusPerihelion ),
             {
-                bodyName: 'Venus'
+                bodyName: 'Venus',
+                rotationPeriod: LabTatasuryaConstants.VENUS_ROTATION_PERIOD
             }
         ) );
         // Bumi
         this.planets.push( new BodyConfiguration(
             LabTatasuryaConstants.EARTH_MASS,
-            LabTatasuryaConstants.EARTH_RADIUS,
+            LabTatasuryaConstants.EARTH_RADIUS * 1.5,
             LabTatasuryaConstants.EARTH_PERIHELION,
             0,
             0,
             LabTatasuryaConstants.EARTH_ORBITAL_SPEED_AT_PERIHELION,
             {
-                bodyName: 'Bumi'
+                bodyName: 'Bumi',
+                rotationPeriod: LabTatasuryaConstants.EARTH_ROTATION_PERIOD
             }
         ) );
         // Mars
+        const marsPerihelion = LabTatasuryaConstants.EARTH_PERIHELION * 1.3;
         this.planets.push( new BodyConfiguration(
             LabTatasuryaConstants.MARS_MASS,
-            LabTatasuryaConstants.MARS_RADIUS,
-            LabTatasuryaConstants.MARS_PERIHELION,
+            LabTatasuryaConstants.MARS_RADIUS * 2,
+            marsPerihelion,
             0,
             0,
-            LabTatasuryaConstants.MARS_ORBITAL_SPEED_AT_PERIHELION,
+            // LabTatasuryaConstants.MARS_ORBITAL_SPEED_AT_PERIHELION,
+            getSpeedAtPerihelion( marsPerihelion ),
             {
-                bodyName: 'Mars'
+                bodyName: 'Mars',
+                rotationPeriod: LabTatasuryaConstants.MARS_ROTATION_PERIOD
             }
         ) );
         // Jupiter
+        const jupiterPerihelion = LabTatasuryaConstants.EARTH_PERIHELION * 2;
         this.planets.push( new BodyConfiguration(
             LabTatasuryaConstants.JUPITER_MASS,
-            LabTatasuryaConstants.JUPITER_RADIUS,
-            LabTatasuryaConstants.JUPITER_PERIHELION,
+            LabTatasuryaConstants.JUPITER_RADIUS * 0.3,
+            jupiterPerihelion,
             0,
             0,
-            LabTatasuryaConstants.JUPITER_ORBITAL_SPEED_AT_PERIHELION,
+            // LabTatasuryaConstants.JUPITER_ORBITAL_SPEED_AT_PERIHELION / 0.5,
+            getSpeedAtPerihelion( jupiterPerihelion ),
             {
-                bodyName: 'Jupiter'
+                bodyName: 'Jupiter',
+                rotationPeriod: LabTatasuryaConstants.JUPITER_ROTATION_PERIOD
             }
         ) );
         // Saturnus
+        const saturnPerihelion = LabTatasuryaConstants.EARTH_PERIHELION * 2.7;
         this.planets.push( new BodyConfiguration(
-            LabTatasuryaConstants.SATURN_MASS,
-            LabTatasuryaConstants.SATURN_RADIUS,
-            LabTatasuryaConstants.SATURN_PERIHELION,
+            LabTatasuryaConstants.SATURN_MASS * 0.5,
+            LabTatasuryaConstants.SATURN_RADIUS * 0.3,
+            saturnPerihelion,
             0,
             0,
-            LabTatasuryaConstants.SATURN_ORBITAL_SPEED_AT_PERIHELION,
+            // LabTatasuryaConstants.SATURN_ORBITAL_SPEED_AT_PERIHELION / 0.5,
+            getSpeedAtPerihelion( saturnPerihelion ),
             {
-                bodyName: 'Saturnus'
+                bodyName: 'Saturnus',
+                rotationPeriod: LabTatasuryaConstants.SATURN_ROTATION_PERIOD
             }
         ) );
         // Uranus
+        const uranusPerihelion = LabTatasuryaConstants.EARTH_PERIHELION * 3.1;
         this.planets.push( new BodyConfiguration(
-            LabTatasuryaConstants.URANUS_MASS,
-            LabTatasuryaConstants.URANUS_RADIUS,
-            LabTatasuryaConstants.URANUS_PERIHELION,
+            LabTatasuryaConstants.URANUS_MASS * 0.5,
+            LabTatasuryaConstants.URANUS_RADIUS * 0.3,
+            uranusPerihelion,
             0,
             0,
-            LabTatasuryaConstants.URANUS_ORBITAL_SPEED_AT_PERIHELION,
+            // LabTatasuryaConstants.URANUS_ORBITAL_SPEED_AT_PERIHELION / 0.5,
+            getSpeedAtPerihelion( uranusPerihelion ),
             {
-                bodyName: 'Uranus'
+                bodyName: 'Uranus',
+                rotationPeriod: LabTatasuryaConstants.URANUS_ROTATION_PERIOD
             }
         ) );
         // Neptunus
+        const neptunePerihelion = LabTatasuryaConstants.EARTH_PERIHELION * 3.56;
         this.planets.push( new BodyConfiguration(
-            LabTatasuryaConstants.NEPTUNE_MASS,
-            LabTatasuryaConstants.NEPTUNE_RADIUS,
-            LabTatasuryaConstants.NEPTUNE_PERIHELION,
+            LabTatasuryaConstants.NEPTUNE_MASS * 0.5,
+            LabTatasuryaConstants.NEPTUNE_RADIUS * 0.3,
+            neptunePerihelion,
             0,
             0,
-            LabTatasuryaConstants.NEPTUNE_ORBITAL_SPEED_AT_PERIHELION,
+            // LabTatasuryaConstants.NEPTUNE_ORBITAL_SPEED_AT_PERIHELION / 0.5,
+            getSpeedAtPerihelion( neptunePerihelion ),
             {
-                bodyName: 'Neptunus'
+                bodyName: 'Neptunus',
+                rotationPeriod: LabTatasuryaConstants.NEPTUNE_ROTATION_PERIOD
             }
         ) );
 

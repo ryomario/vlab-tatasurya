@@ -146,7 +146,7 @@ class MorePlanetsScene extends Scene {
             tandem: measuringTapeTandem.createTandem( 'endPointProperty' )
         }, measuringTapePointOptions ) );
 
-        this.zoomLevelProperty = new NumberProperty( 2, {
+        this.zoomLevelProperty = new NumberProperty( 1, {
             tandem: tandem.createTandem( 'zoomLevelProperty' ),
             range: new Range( 0.12, 3 ),
         } );
