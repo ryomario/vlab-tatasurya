@@ -59,6 +59,7 @@ type SelfOptions = {
     allPlanet?: AllPlanetModeConfig | null;
     planetVisibility?: PlanetName[];
     sunMercury?: SunMercuryModeConfig | null;
+    sunVenus?: SunVenusModeConfig | null;
     sunEarth?: SunEarthModeConfig | null;
     adjustMoonPathLength?: boolean;
     adjustMoonOrbit?: boolean;
@@ -69,6 +70,7 @@ type SceneFactoryOptions = SelfOptions;
 class SceneFactory {
     public readonly scenes: Scene[];
     public static SunMercuryModeConfig: typeof SunMercuryModeConfig;
+    public static SunVenusModeConfig: typeof SunVenusModeConfig;
     public static SunEarthModeConfig: typeof SunEarthModeConfig;
     public static AllPlanetModeConfig: typeof AllPlanetModeConfig;
 
@@ -76,6 +78,7 @@ class SceneFactory {
         const options = optionize<SceneFactoryOptions, SelfOptions>()( {
             allPlanet: null,
             sunMercury: null,
+            sunVenus: null,
             sunEarth: null,
             planetVisibility: ['earth'],
 
@@ -87,6 +90,7 @@ class SceneFactory {
 
         options.allPlanet?.center();
         options.sunMercury?.center();
+        options.sunVenus?.center();
         options.sunEarth?.center();
 
         const readoutInEarthMasses = ( bodyNode: BodyNode, visibleProperty: TReadOnlyProperty<boolean> ) => new EarthMassReadoutNode( bodyNode, visibleProperty );
@@ -150,6 +154,28 @@ class SceneFactory {
                 SUN_MODES_VELOCITY_SCALE,
                 readoutInEarthMasses,
                 options.sunMercury.planet.x / 2,
+                starPlanetSceneTandem,
+                viewTandem.createTandem( LabTatasuryaConstants.PLAY_AREA_TANDEM_NAME ).createTandem( 'starPlanetSceneView' ),
+                [ star0, planet0 ],
+                [ new Pair( star0, planet0, starPlanetSceneTandem.createTandem( 'starPlanetPair' ) ) ]
+            ) );
+        }
+        if ( options.sunVenus ) {
+            const starPlanetSceneTandem = modelTandem.createTandem( 'suhVenusScene' );
+    
+            const star0 = new Star( model, options.sunVenus.sun, starPlanetSceneTandem.createTandem( 'star' ), {
+                maxPathLength: 345608942000 // in km
+            } );
+            const planet0 = new Planet( model, options.sunVenus.planet, starPlanetSceneTandem.createTandem( 'planet' ) );
+    
+            this.scenes.push( new LabTatasuryaScene(
+                model,
+                options.sunVenus,
+                scaledDays,
+                this.createIconImage( [ sun_png, venus_png ], [ new Text( LabTatasuryaStrings.venus, { fill: LabTatasuryaColors.foregroundProperty } ) ] ),
+                SUN_MODES_VELOCITY_SCALE,
+                readoutInEarthMasses,
+                options.sunVenus.planet.x / 2,
                 starPlanetSceneTandem,
                 viewTandem.createTandem( LabTatasuryaConstants.PLAY_AREA_TANDEM_NAME ).createTandem( 'starPlanetSceneView' ),
                 [ star0, planet0 ],
@@ -428,6 +454,40 @@ class SunMercuryModeConfig extends ModeConfig {
         return [ this.sun, this.planet ];
     }
 }
+
+class SunVenusModeConfig extends ModeConfig {
+    public readonly sun: BodyConfiguration;
+    public readonly planet: BodyConfiguration;
+
+    public constructor() {
+        super( 1.25 );
+
+        this.sun = new BodyConfiguration(
+            LabTatasuryaConstants.SUN_MASS,
+            LabTatasuryaConstants.SUN_RADIUS,
+            0, 0, 0, 0,
+            sun_png
+        );
+        this.planet = new BodyConfiguration(
+            LabTatasuryaConstants.VENUS_MASS,
+            LabTatasuryaConstants.VENUS_RADIUS,
+            LabTatasuryaConstants.VENUS_PERIHELION,
+            0,
+            0,
+            LabTatasuryaConstants.VENUS_ORBITAL_SPEED_AT_PERIHELION,
+            venus_png
+        );
+        this.initialMeasuringTapePosition = new Line(
+            0,0,0,0
+        );
+        this.forceScale = FORCE_SCALE * 120;
+    }
+
+    protected getBodies(): BodyConfiguration[] {
+        return [ this.sun, this.planet ];
+    }
+}
+
 class SunEarthModeConfig extends ModeConfig {
     public readonly sun: BodyConfiguration;
     public readonly planet: BodyConfiguration;
@@ -532,6 +592,7 @@ class Star extends Body {
 }
 
 SceneFactory.SunMercuryModeConfig = SunMercuryModeConfig;
+SceneFactory.SunVenusModeConfig = SunVenusModeConfig;
 SceneFactory.SunEarthModeConfig = SunEarthModeConfig;
 SceneFactory.AllPlanetModeConfig = AllPlanetModeConfig;
 

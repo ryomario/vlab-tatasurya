@@ -104,5 +104,8 @@
   },
   "mercury": {
     "value": "Merkurius"
+  },
+  "venus": {
+    "value": "Venus"
   }
 }

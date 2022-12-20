@@ -20,6 +20,7 @@ import labTatasurya from "../../labTatasurya.js";
 const SUN_RADIUS_MULTIPLIER = 50; // sun radius multiplier for SunEarthMode and SunEarthMoonMode, tuned by hand
 const SUN_MERCURY_RADIUS_MULTIPLIER = 2000;
 const SUN_EARTH_RADIUS_MULTIPLIER = 1500;
+const SUN_VENUS_RADIUS_MULTIPLIER = 1700;
 const ALL_PLANETS_RADIUS_MULTIPLIER = 1000;
 
 /**
@@ -34,6 +35,7 @@ class PlanetTatasuryaSceneFactory extends SceneFactory {
             model,
             modelTandem, viewTandem, {
                 sunMercury: new SunMercuryModeConfig(),
+                sunVenus: new SunVenusModeConfig(),
                 sunEarth: new SunEarthModeConfig(),
                 allPlanet: new AllPlanetModeConfig(),
             }
@@ -62,7 +64,7 @@ labTatasurya.register( 'PlanetTatasuryaSceneFactory', PlanetTatasuryaSceneFactor
 labTatasurya.register( 'AllPlanetModeConfig', AllPlanetModeConfig );
 
 /**
- * Model configuration for a system with the sun and the earth.
+ * Model configuration for a system with the sun and the mercury.
  */
  class SunMercuryModeConfig extends SceneFactory.SunMercuryModeConfig {
     public constructor() {
@@ -76,7 +78,22 @@ labTatasurya.register( 'AllPlanetModeConfig', AllPlanetModeConfig );
     }
 }
 
-labTatasurya.register( 'SunMercuryModeConfig', SunMercuryModeConfig );
+/**
+ * Model configuration for a system with the sun and the venus.
+ */
+ class SunVenusModeConfig extends SceneFactory.SunVenusModeConfig {
+    public constructor() {
+        super();
+        this.sun.radius *= SUN_RADIUS_MULTIPLIER;
+        this.planet.radius *= SUN_VENUS_RADIUS_MULTIPLIER;
+
+        // Sun shouldn't move in model modes
+        this.sun.isMovable = false;
+        this.forceScale! *= 0.58; // Tuned so the default force arrow takes 1/2 grid cell
+    }
+}
+
+labTatasurya.register( 'SunVenusModeConfig', SunVenusModeConfig );
 
 /**
  * Model configuration for a system with the sun and the earth.
