@@ -22,6 +22,7 @@ import labTatasurya from '../../labTatasurya.js';
 // constants
 const CONTROL_FONT = new PhetFont( 14 );
 const LABEL_MAP = {
+    '': LabTatasuryaStrings.planetMassStringProperty,
     planet: LabTatasuryaStrings.planetMassStringProperty,
     satellite: LabTatasuryaStrings.satelliteMassStringProperty,
     star: LabTatasuryaStrings.starMassStringProperty,

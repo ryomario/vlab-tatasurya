@@ -629,7 +629,10 @@ class SunEarthModeConfig extends ModeConfig {
             LabTatasuryaConstants.SUN_MASS,
             LabTatasuryaConstants.SUN_RADIUS,
             0, 0, 0, 0,
-            sun_png
+            sun_png,
+            {
+                bodyName: 'Matahari'
+            }
         );
         this.planet = new BodyConfiguration(
             LabTatasuryaConstants.EARTH_MASS,
@@ -638,7 +641,10 @@ class SunEarthModeConfig extends ModeConfig {
             0,
             0,
             LabTatasuryaConstants.EARTH_ORBITAL_SPEED_AT_PERIHELION,
-            earth_png
+            earth_png,
+            {
+                bodyName: 'Bumi'
+            }
         );
         this.initialMeasuringTapePosition = new Line(
             ( this.sun.x + this.planet.x ) / 3, // x start from
