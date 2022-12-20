@@ -95,7 +95,7 @@ class LabTatasuryaSceneView extends SceneView {
         }
 
         // Add the node for the overlay grid, setting its visibility based on the model.showGridProperty
-        const gridNode = new GridNode( scene.transformProperty, scene.gridSpacing, scene.gridCenter, 28 );
+        const gridNode = new GridNode( scene.transformProperty, scene.gridSpacing, scene.gridCenter, 100 );
         model.showGridProperty.linkAttribute( gridNode, 'visible' );
         this.addChild( gridNode );
 

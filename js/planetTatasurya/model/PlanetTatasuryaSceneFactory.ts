@@ -23,9 +23,9 @@ const SUN_EARTH_RADIUS_MULTIPLIER = 1500;
 const SUN_VENUS_RADIUS_MULTIPLIER = 1700;
 const SUN_MARS_RADIUS_MULTIPLIER = 2000;
 const SUN_JUPITER_RADIUS_MULTIPLIER = 1000;
-const SUN_SATURN_RADIUS_MULTIPLIER = 1000;
-const SUN_URANUS_RADIUS_MULTIPLIER = 1000;
-const SUN_NEPTUNE_RADIUS_MULTIPLIER = 1000;
+const SUN_SATURN_RADIUS_MULTIPLIER = 2000;
+const SUN_URANUS_RADIUS_MULTIPLIER = 3000;
+const SUN_NEPTUNE_RADIUS_MULTIPLIER = 5000;
 const ALL_PLANETS_RADIUS_MULTIPLIER = 1000;
 
 /**
@@ -162,7 +162,7 @@ labTatasurya.register( 'SunJupiterModeConfig', SunJupiterModeConfig );
  class SunSaturnModeConfig extends SceneFactory.SunSaturnModeConfig {
     public constructor() {
         super();
-        this.sun.radius *= SUN_SATURN_RADIUS_MULTIPLIER / 2;
+        this.sun.radius *= SUN_SATURN_RADIUS_MULTIPLIER / 3;
         this.planet.radius *= SUN_SATURN_RADIUS_MULTIPLIER;
 
         // Sun shouldn't move in model modes
@@ -179,7 +179,7 @@ labTatasurya.register( 'SunSaturnModeConfig', SunSaturnModeConfig );
  class SunUranusModeConfig extends SceneFactory.SunUranusModeConfig {
     public constructor() {
         super();
-        this.sun.radius *= SUN_URANUS_RADIUS_MULTIPLIER / 2;
+        this.sun.radius *= SUN_URANUS_RADIUS_MULTIPLIER / 3;
         this.planet.radius *= SUN_URANUS_RADIUS_MULTIPLIER;
 
         // Sun shouldn't move in model modes
@@ -196,7 +196,7 @@ labTatasurya.register( 'SunUranusModeConfig', SunUranusModeConfig );
  class SunNeptuneModeConfig extends SceneFactory.SunNeptuneModeConfig {
     public constructor() {
         super();
-        this.sun.radius *= SUN_NEPTUNE_RADIUS_MULTIPLIER / 2;
+        this.sun.radius *= SUN_NEPTUNE_RADIUS_MULTIPLIER / 5;
         this.planet.radius *= SUN_NEPTUNE_RADIUS_MULTIPLIER;
 
         // Sun shouldn't move in model modes

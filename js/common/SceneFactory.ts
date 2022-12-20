@@ -791,7 +791,7 @@ class SunNeptuneModeConfig extends ModeConfig {
     public readonly planet: BodyConfiguration;
 
     public constructor() {
-        super( 0.1 );
+        super( 0.06 );
 
         this.sun = new BodyConfiguration(
             LabTatasuryaConstants.SUN_MASS,
