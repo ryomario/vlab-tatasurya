@@ -24,6 +24,7 @@ import LabTatasuryaModel from "../model/LabTatasuryaModel.js";
 import Scene from "../Scene.js";
 import BodyNode from "./BodyNode.js";
 import ExplosionNode from "./ExplosionNode.js";
+import PathsCanvasNode from "./PathsCanvasNode.js";
 import SceneView from "./SceneView.js";
 import TimeCounter from "./TimeCounter.js";
 import ZoomControl from "./ZoomControl.js";
@@ -36,8 +37,9 @@ class MorePlanetsSceneView extends SceneView {
 
         const bodies = scene.physicsEngine.getBodies();
 
-        // this.addChild( new PathsCanvasNode( bodies, scene.transformProperty, model.showPathProperty, MorePlanetsSceneView.STAGE_SIZE ) );
-
+        bodies.forEach( body => {
+            this.addChild( new PathsCanvasNode( [ body ], scene.transformProperty, model.showPathProperty, MorePlanetsSceneView.STAGE_SIZE ) );
+        } );
 
         // Use canvas coordinates to determine whether something has left the visible area
         const isReturnableProperties: TReadOnlyProperty<boolean>[] = [];

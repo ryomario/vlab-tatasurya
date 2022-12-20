@@ -56,17 +56,7 @@ class CheckboxPanel extends VerticalCheckboxGroup {
 
     public constructor( model: LabTatasuryaModel, providedOptions?: CheckboxPanelOptions ) {
 
-        const items: VerticalCheckboxGroupItem[] = [ {
-        property: model.showGravityForceProperty,
-        createNode: tandem => new HBox( merge( {
-            children: [
-                new Text( LabTatasuryaStrings.centeredSystemStringProperty, combineOptions<TextOptions>( { tandem: tandem.createTandem( 'labelText' ) }, TEXT_OPTIONS ) ),
-                new ArrowNode( 135, ARROW_Y_COORDINATE, 180, ARROW_Y_COORDINATE, { fill: '#4380C2' } )
-            ]
-        }, HBOX_OPTIONS ) ),
-            tandemName: 'gravityForceCheckbox',
-            options: CHECKBOX_OPTIONS
-        },
+        const items: VerticalCheckboxGroupItem[] = [
         // {
 
         //         // velocity checkbox
@@ -81,6 +71,21 @@ class CheckboxPanel extends VerticalCheckboxGroup {
         //         options: CHECKBOX_OPTIONS
         //     }
         ];
+
+        // gravity force
+        if ( model.showGravityForceProperty.getInitialValue() ) {
+            items.push( {
+                property: model.showGravityForceProperty,
+                createNode: tandem => new HBox( merge( {
+                    children: [
+                        new Text( LabTatasuryaStrings.centeredSystemStringProperty, combineOptions<TextOptions>( { tandem: tandem.createTandem( 'labelText' ) }, TEXT_OPTIONS ) ),
+                        new ArrowNode( 135, ARROW_Y_COORDINATE, 180, ARROW_Y_COORDINATE, { fill: '#4380C2' } )
+                    ]
+                }, HBOX_OPTIONS ) ),
+                tandemName: 'gravityForceCheckbox',
+                options: CHECKBOX_OPTIONS
+            } );
+        }
 
         // mass checkbox
         if ( model.showMassCheckbox ) {
@@ -104,17 +109,19 @@ class CheckboxPanel extends VerticalCheckboxGroup {
         } );
 
         // path checkbox
-        items.push( {
-            property: model.showPathProperty,
-            tandemName: 'pathCheckbox',
-            createNode: tandem => new HBox( merge( {
-                children: [
-                    new Text( LabTatasuryaStrings.pathStringProperty, combineOptions<TextOptions>( { tandem: tandem.createTandem( 'labelText' ) }, TEXT_OPTIONS ) ),
-                    pathIconImageNode
-                ]
-            }, HBOX_OPTIONS ) ),
-            options: CHECKBOX_OPTIONS
-        } );
+        if ( model.showPathProperty.getInitialValue() ) {
+            items.push( {
+                property: model.showPathProperty,
+                tandemName: 'pathCheckbox',
+                createNode: tandem => new HBox( merge( {
+                    children: [
+                        new Text( LabTatasuryaStrings.pathStringProperty, combineOptions<TextOptions>( { tandem: tandem.createTandem( 'labelText' ) }, TEXT_OPTIONS ) ),
+                        pathIconImageNode
+                    ]
+                }, HBOX_OPTIONS ) ),
+                options: CHECKBOX_OPTIONS
+            } );
+        }
 
         // grid checkbox
         // items.push( {

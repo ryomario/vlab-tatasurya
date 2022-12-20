@@ -20,8 +20,14 @@ class OrbitModel extends LabTatasuryaModel {
       modelTandem
     );
 
+    this.showGravityForceProperty.setInitialValue( false );
+    this.showGravityForceProperty.set( false );
+
     this.showMassProperty.setInitialValue( false );
     this.showMassProperty.set( false );
+
+    this.showPathProperty.setInitialValue( true );
+    this.showPathProperty.set( true );
   }
 }
 
