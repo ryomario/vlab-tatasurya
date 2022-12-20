@@ -65,6 +65,7 @@ type SelfOptions = {
     sunJupiter?: SunJupiterModeConfig | null;
     sunSaturn?: SunSaturnModeConfig | null;
     sunUranus?: SunUranusModeConfig | null;
+    sunNeptune?: SunNeptuneModeConfig | null;
     adjustMoonPathLength?: boolean;
     adjustMoonOrbit?: boolean;
 };
@@ -80,6 +81,7 @@ class SceneFactory {
     public static SunJupiterModeConfig: typeof SunJupiterModeConfig;
     public static SunSaturnModeConfig: typeof SunSaturnModeConfig;
     public static SunUranusModeConfig: typeof SunUranusModeConfig;
+    public static SunNeptuneModeConfig: typeof SunNeptuneModeConfig;
     public static AllPlanetModeConfig: typeof AllPlanetModeConfig;
 
     public constructor( model: LabTatasuryaModel, modelTandem: Tandem, viewTandem: Tandem, providedOptions?: SceneFactoryOptions ) {
@@ -92,6 +94,7 @@ class SceneFactory {
             sunJupiter: null,
             sunSaturn: null,
             sunUranus: null,
+            sunNeptune: null,
             planetVisibility: ['earth'],
 
             adjustMoonPathLength: false, // increase the moon path so that it matches other traces at default settings
@@ -108,6 +111,7 @@ class SceneFactory {
         options.sunJupiter?.center();
         options.sunSaturn?.center();
         options.sunUranus?.center();
+        options.sunNeptune?.center();
 
         const readoutInEarthMasses = ( bodyNode: BodyNode, visibleProperty: TReadOnlyProperty<boolean> ) => new EarthMassReadoutNode( bodyNode, visibleProperty );
 
@@ -299,6 +303,28 @@ class SceneFactory {
                 options.sunUranus,
                 scaledDays,
                 this.createIconImage( [ sun_png, uranus_png ], [ new Text( LabTatasuryaStrings.uranus, { fill: LabTatasuryaColors.foregroundProperty } ) ] ),
+                SUN_MODES_VELOCITY_SCALE,
+                readoutInEarthMasses,
+                LabTatasuryaConstants.EARTH_PERIHELION,
+                starPlanetSceneTandem,
+                viewTandem.createTandem( LabTatasuryaConstants.PLAY_AREA_TANDEM_NAME ).createTandem( 'starPlanetSceneView' ),
+                [ star0, planet0 ],
+                [ new Pair( star0, planet0, starPlanetSceneTandem.createTandem( 'starPlanetPair' ) ) ]
+            ) );
+        }
+        if ( options.sunNeptune ) {
+            const starPlanetSceneTandem = modelTandem.createTandem( 'suhEarthScene' );
+    
+            const star0 = new Star( model, options.sunNeptune.sun, starPlanetSceneTandem.createTandem( 'star' ), {
+                maxPathLength: 345608942000 // in km
+            } );
+            const planet0 = new Planet( model, options.sunNeptune.planet, starPlanetSceneTandem.createTandem( 'planet' ) );
+    
+            this.scenes.push( new LabTatasuryaScene(
+                model,
+                options.sunNeptune,
+                scaledDays,
+                this.createIconImage( [ sun_png, neptune_png ], [ new Text( LabTatasuryaStrings.neptune, { fill: LabTatasuryaColors.foregroundProperty } ) ] ),
                 SUN_MODES_VELOCITY_SCALE,
                 readoutInEarthMasses,
                 LabTatasuryaConstants.EARTH_PERIHELION,
@@ -760,6 +786,39 @@ class SunUranusModeConfig extends ModeConfig {
     }
 }
 
+class SunNeptuneModeConfig extends ModeConfig {
+    public readonly sun: BodyConfiguration;
+    public readonly planet: BodyConfiguration;
+
+    public constructor() {
+        super( 0.1 );
+
+        this.sun = new BodyConfiguration(
+            LabTatasuryaConstants.SUN_MASS,
+            LabTatasuryaConstants.SUN_RADIUS,
+            0, 0, 0, 0,
+            sun_png
+        );
+        this.planet = new BodyConfiguration(
+            LabTatasuryaConstants.NEPTUNE_MASS,
+            LabTatasuryaConstants.NEPTUNE_RADIUS,
+            LabTatasuryaConstants.NEPTUNE_PERIHELION,
+            0,
+            0,
+            LabTatasuryaConstants.NEPTUNE_ORBITAL_SPEED_AT_PERIHELION,
+            neptune_png
+        );
+        this.initialMeasuringTapePosition = new Line(
+            0,0,0,0
+        );
+        this.forceScale = FORCE_SCALE * 120;
+    }
+
+    protected getBodies(): BodyConfiguration[] {
+        return [ this.sun, this.planet ];
+    }
+}
+
 
 /**
  * Creates a BodyRenderer that just shows the specified image
@@ -834,6 +893,7 @@ SceneFactory.SunMarsModeConfig = SunMarsModeConfig;
 SceneFactory.SunJupiterModeConfig = SunJupiterModeConfig;
 SceneFactory.SunSaturnModeConfig = SunSaturnModeConfig;
 SceneFactory.SunUranusModeConfig = SunUranusModeConfig;
+SceneFactory.SunNeptuneModeConfig = SunNeptuneModeConfig;
 SceneFactory.AllPlanetModeConfig = AllPlanetModeConfig;
 
 labTatasurya.register( 'SceneFactory', SceneFactory );
