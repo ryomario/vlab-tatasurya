@@ -98,5 +98,8 @@
   },
   "chooseSettings": {
     "value": "Pilih Pengaturan"
+  },
+  "allPlanets": {
+    "value": "Semua planet"
   }
 }

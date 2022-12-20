@@ -83,6 +83,8 @@ type StringsType = {
   'measuringTapeStringProperty': LinkableProperty<string>;
   'chooseSettings': string;
   'chooseSettingsStringProperty': LinkableProperty<string>;
+  'allPlanets': string;
+  'allPlanetsStringProperty': LinkableProperty<string>;
 };
 
 const LabTatasuryaStrings = getStringModule( 'LAB_TATASURYA' ) as StringsType;

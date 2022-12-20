@@ -14,7 +14,7 @@ import PlanetTatasuryaModel from './model/PlanetTatasuryaModel.js';
 import LabTatasuryaStrings from '../LabTatasuryaStrings.js';
 import ScreenIcon from '../../../joist/js/ScreenIcon.js';
 import { Image } from '../../../scenery/js/imports.js';
-import icon from '../../images/orbit_png.js';
+import icon from '../../images/allPlanets_png.js';
 import PlanetTatasuryaScreenView from './view/PlanetTatasuryaScreenView.js';
 
 class PlanetTatasuryaScreen extends Screen<PlanetTatasuryaModel, PlanetTatasuryaScreenView> {

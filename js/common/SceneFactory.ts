@@ -12,12 +12,20 @@
 
 import TReadOnlyProperty from '../../../axon/js/TReadOnlyProperty.js';
 import optionize from '../../../phet-core/js/optionize.js';
-import { Color, HBox, Image, Line, Node } from '../../../scenery/js/imports.js';
+import { Color, HBox, Image, Line, Node, Text } from '../../../scenery/js/imports.js';
 import Tandem from '../../../tandem/js/Tandem.js';
 import LabTatasuryaConstants from './LabTatasuryaConstants.js';
 import sun_png from '../../images/Matahari_png.js';
+import moon_png from '../../images/Bulan_png.js';
+import mercury_png from '../../images/Merkurius_png.js';
+import venus_png from '../../images/Venus_png.js';
 import earth_png from '../../images/Bumi_png.js';
-import allPlanet_png from '../../images/orbit_png.js';
+import mars_png from '../../images/Mars_png.js';
+import jupiter_png from '../../images/Jupiter_png.js';
+import saturn_png from '../../images/Saturnus_png.js';
+import uranus_png from '../../images/Uranus_png.js';
+import neptune_png from '../../images/Neptunus_png.js';
+import allPlanet_png from '../../images/allPlanets_png.js';
 import planetGeneric_png from '../../images/Bulan_png.js';
 import LabTatasuryaStrings from '../LabTatasuryaStrings.js';
 import TProperty from '../../../axon/js/TProperty.js';
@@ -34,12 +42,13 @@ import BodyNode from './view/BodyNode.js';
 import EarthMassReadoutNode from './view/EarthMassReadoutNode.js';
 import Pair from './model/Pair.js';
 import ModeConfig from './model/ModeConfig.js';
-import BodyConfiguration from './model/BodyConfiguration.js';
+import OldBodyConfiguration from './model/BodyConfiguration.js';
 import { ImageRenderer, SwitchableBodyRenderer } from './view/BodyRenderer.js';
 import Body, { BodyOptions } from './model/Body.js';
 import Property from '../../../axon/js/Property.js';
 import Scene from './Scene.js';
 import MorePlanetsScene from './MorePlanetsScene.js';
+import LabTatasuryaColors from './LabTatasuryaColors.js';
 
 // CONSTANTS
 const FORCE_SCALE = VectorNode.FORCE_SCALE;
@@ -111,7 +120,7 @@ class SceneFactory {
                 model,
                 options.allPlanet,
                 scaledDays,
-                this.createIconImage( [ allPlanet_png ] ),
+                this.createIconImage( [ allPlanet_png ], [ new Text( LabTatasuryaStrings.allPlanets, { fill: LabTatasuryaColors.foregroundProperty } ) ] ),
                 SUN_MODES_VELOCITY_SCALE,
                 options.allPlanet.planets[2].x,
                 starPlanetSceneTandem,
@@ -133,7 +142,7 @@ class SceneFactory {
                 model,
                 options.sunEarth,
                 scaledDays,
-                this.createIconImage( [ sun_png, earth_png ] ),
+                this.createIconImage( [ sun_png, earth_png ], [ new Text( LabTatasuryaStrings.earth, { fill: LabTatasuryaColors.foregroundProperty } ) ] ),
                 SUN_MODES_VELOCITY_SCALE,
                 readoutInEarthMasses,
                 options.sunEarth.planet.x / 2,
@@ -150,12 +159,15 @@ class SceneFactory {
     /**
      * Creates an image that can be used for the scene icon, showing the nodes of each body in the mode.
      */
-    private createIconImage( images: HTMLImageElement[] ): Node {
+    private createIconImage( images: HTMLImageElement[], nodes?: Node[] ): Node {
         const children: Node[] = [];
         images.forEach( image => children.push( new Image( image ) ) );
 
         for ( let i = 0; i < children.length; i++ ) {
             children[ i ].setScaleMagnitude( 25 / children[ i ].width );
+        }
+        for ( let i = 0; nodes && i < nodes.length; i++ ) {
+            children.push( nodes[ i ] );
         }
 
         return new HBox( { children: children, spacing: 20 } );
@@ -186,6 +198,16 @@ const getSpeedAtPerihelion = ( R2: number ) => {
     return Math.sqrt( R1 / R2 ) * v1;
 }
 
+class BodyConfiguration extends OldBodyConfiguration {
+    public readonly planetImage: HTMLImageElement;
+
+    constructor( mass: number, radius: number, x: number, y: number, vx: number, vy: number, planetImage: HTMLImageElement, providedOptions?: Object ) {
+        super( mass, radius, x, y, vx, vy, providedOptions );
+
+        this.planetImage = planetImage;
+    }
+}
+
 class AllPlanetModeConfig extends ModeConfig {
     public readonly sun: BodyConfiguration;
     public readonly planets: BodyConfiguration[];
@@ -197,6 +219,7 @@ class AllPlanetModeConfig extends ModeConfig {
             LabTatasuryaConstants.SUN_MASS,
             LabTatasuryaConstants.SUN_RADIUS,
             0, 0, 0, 0,
+            sun_png,
             {
                 bodyName: 'Sun',
             }
@@ -214,6 +237,7 @@ class AllPlanetModeConfig extends ModeConfig {
             0,
             // LabTatasuryaConstants.MERCURY_ORBITAL_SPEED_AT_PERIHELION,
             getSpeedAtPerihelion( mercuryPerihelion ),
+            mercury_png,
             {
                 bodyName: 'Merkurius',
                 rotationPeriod: LabTatasuryaConstants.MERCURY_ROTATION_PERIOD
@@ -229,6 +253,7 @@ class AllPlanetModeConfig extends ModeConfig {
             0,
             // LabTatasuryaConstants.VENUS_ORBITAL_SPEED_AT_PERIHELION,
             getSpeedAtPerihelion( venusPerihelion ),
+            venus_png,
             {
                 bodyName: 'Venus',
                 rotationPeriod: LabTatasuryaConstants.VENUS_ROTATION_PERIOD
@@ -242,6 +267,7 @@ class AllPlanetModeConfig extends ModeConfig {
             0,
             0,
             LabTatasuryaConstants.EARTH_ORBITAL_SPEED_AT_PERIHELION,
+            earth_png,
             {
                 bodyName: 'Bumi',
                 rotationPeriod: LabTatasuryaConstants.EARTH_ROTATION_PERIOD
@@ -257,6 +283,7 @@ class AllPlanetModeConfig extends ModeConfig {
             0,
             // LabTatasuryaConstants.MARS_ORBITAL_SPEED_AT_PERIHELION,
             getSpeedAtPerihelion( marsPerihelion ),
+            mars_png,
             {
                 bodyName: 'Mars',
                 rotationPeriod: LabTatasuryaConstants.MARS_ROTATION_PERIOD
@@ -272,6 +299,7 @@ class AllPlanetModeConfig extends ModeConfig {
             0,
             // LabTatasuryaConstants.JUPITER_ORBITAL_SPEED_AT_PERIHELION / 0.5,
             getSpeedAtPerihelion( jupiterPerihelion ),
+            jupiter_png,
             {
                 bodyName: 'Jupiter',
                 rotationPeriod: LabTatasuryaConstants.JUPITER_ROTATION_PERIOD
@@ -287,6 +315,7 @@ class AllPlanetModeConfig extends ModeConfig {
             0,
             // LabTatasuryaConstants.SATURN_ORBITAL_SPEED_AT_PERIHELION / 0.5,
             getSpeedAtPerihelion( saturnPerihelion ),
+            saturn_png,
             {
                 bodyName: 'Saturnus',
                 rotationPeriod: LabTatasuryaConstants.SATURN_ROTATION_PERIOD
@@ -302,6 +331,7 @@ class AllPlanetModeConfig extends ModeConfig {
             0,
             // LabTatasuryaConstants.URANUS_ORBITAL_SPEED_AT_PERIHELION / 0.5,
             getSpeedAtPerihelion( uranusPerihelion ),
+            uranus_png,
             {
                 bodyName: 'Uranus',
                 rotationPeriod: LabTatasuryaConstants.URANUS_ROTATION_PERIOD
@@ -317,6 +347,7 @@ class AllPlanetModeConfig extends ModeConfig {
             0,
             // LabTatasuryaConstants.NEPTUNE_ORBITAL_SPEED_AT_PERIHELION / 0.5,
             getSpeedAtPerihelion( neptunePerihelion ),
+            neptune_png,
             {
                 bodyName: 'Neptunus',
                 rotationPeriod: LabTatasuryaConstants.NEPTUNE_ROTATION_PERIOD
@@ -349,7 +380,8 @@ class SunEarthModeConfig extends ModeConfig {
         this.sun = new BodyConfiguration(
             LabTatasuryaConstants.SUN_MASS,
             LabTatasuryaConstants.SUN_RADIUS,
-            0, 0, 0, 0
+            0, 0, 0, 0,
+            sun_png
         );
         this.planet = new BodyConfiguration(
             LabTatasuryaConstants.EARTH_MASS,
@@ -357,7 +389,8 @@ class SunEarthModeConfig extends ModeConfig {
             LabTatasuryaConstants.EARTH_PERIHELION,
             0,
             0,
-            LabTatasuryaConstants.EARTH_ORBITAL_SPEED_AT_PERIHELION
+            LabTatasuryaConstants.EARTH_ORBITAL_SPEED_AT_PERIHELION,
+            earth_png
         );
         this.initialMeasuringTapePosition = new Line(
             ( this.sun.x + this.planet.x ) / 3, // x start from
@@ -410,7 +443,7 @@ class Planet extends Body {
       bodyConfiguration,
       Color.gray,
       Color.lightGray,
-      getImageRenderer( earth_png ),
+      getSwitchableRenderer( bodyConfiguration.planetImage, moon_png, bodyConfiguration.mass ),
       -Math.PI / 4,
       bodyConfiguration.mass,
       new Property( bodyConfiguration.bodyName, { phetioReadOnly: true } ),
@@ -429,7 +462,7 @@ class Star extends Body {
             bodyConfiguration,
             Color.yellow,
             Color.white,
-            getImageRenderer( sun_png ),
+            getImageRenderer( bodyConfiguration.planetImage ),
             -Math.PI / 4,
             bodyConfiguration.mass,
             new Property( bodyConfiguration.bodyName, { phetioReadOnly: true } ),
