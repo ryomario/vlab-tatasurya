@@ -84,7 +84,7 @@ public constructor( model: LabTatasuryaModel, tandem: Tandem ) {
                 },
                 align: 'left'
             } ) ),
-            new Panel( massesControlPanel, combineOptions<PanelOptions>( {}, LabTatasuryaConstants.CONTROL_PANEL_OPTIONS, {
+            new Panel( massesControlPanel, combineOptions<PanelOptions>( { visibleProperty: model.showMassProperty }, LabTatasuryaConstants.CONTROL_PANEL_OPTIONS, {
                 tandem: massesControlPanelTandem,
                 visiblePropertyOptions: {
                     phetioReadOnly: false
