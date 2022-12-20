@@ -62,6 +62,7 @@ type SelfOptions = {
     sunVenus?: SunVenusModeConfig | null;
     sunEarth?: SunEarthModeConfig | null;
     sunMars?: SunMarsModeConfig | null;
+    sunJupiter?: SunJupiterModeConfig | null;
     adjustMoonPathLength?: boolean;
     adjustMoonOrbit?: boolean;
 };
@@ -74,6 +75,7 @@ class SceneFactory {
     public static SunVenusModeConfig: typeof SunVenusModeConfig;
     public static SunEarthModeConfig: typeof SunEarthModeConfig;
     public static SunMarsModeConfig: typeof SunMarsModeConfig;
+    public static SunJupiterModeConfig: typeof SunJupiterModeConfig;
     public static AllPlanetModeConfig: typeof AllPlanetModeConfig;
 
     public constructor( model: LabTatasuryaModel, modelTandem: Tandem, viewTandem: Tandem, providedOptions?: SceneFactoryOptions ) {
@@ -83,6 +85,7 @@ class SceneFactory {
             sunVenus: null,
             sunEarth: null,
             sunMars: null,
+            sunJupiter: null,
             planetVisibility: ['earth'],
 
             adjustMoonPathLength: false, // increase the moon path so that it matches other traces at default settings
@@ -221,6 +224,28 @@ class SceneFactory {
                 options.sunMars,
                 scaledDays,
                 this.createIconImage( [ sun_png, mars_png ], [ new Text( LabTatasuryaStrings.mars, { fill: LabTatasuryaColors.foregroundProperty } ) ] ),
+                SUN_MODES_VELOCITY_SCALE,
+                readoutInEarthMasses,
+                LabTatasuryaConstants.EARTH_PERIHELION,
+                starPlanetSceneTandem,
+                viewTandem.createTandem( LabTatasuryaConstants.PLAY_AREA_TANDEM_NAME ).createTandem( 'starPlanetSceneView' ),
+                [ star0, planet0 ],
+                [ new Pair( star0, planet0, starPlanetSceneTandem.createTandem( 'starPlanetPair' ) ) ]
+            ) );
+        }
+        if ( options.sunJupiter ) {
+            const starPlanetSceneTandem = modelTandem.createTandem( 'suhEarthScene' );
+    
+            const star0 = new Star( model, options.sunJupiter.sun, starPlanetSceneTandem.createTandem( 'star' ), {
+                maxPathLength: 345608942000 // in km
+            } );
+            const planet0 = new Planet( model, options.sunJupiter.planet, starPlanetSceneTandem.createTandem( 'planet' ) );
+    
+            this.scenes.push( new LabTatasuryaScene(
+                model,
+                options.sunJupiter,
+                scaledDays,
+                this.createIconImage( [ sun_png, jupiter_png ], [ new Text( LabTatasuryaStrings.jupiter, { fill: LabTatasuryaColors.foregroundProperty } ) ] ),
                 SUN_MODES_VELOCITY_SCALE,
                 readoutInEarthMasses,
                 LabTatasuryaConstants.EARTH_PERIHELION,
@@ -583,6 +608,39 @@ class SunMarsModeConfig extends ModeConfig {
     }
 }
 
+class SunJupiterModeConfig extends ModeConfig {
+    public readonly sun: BodyConfiguration;
+    public readonly planet: BodyConfiguration;
+
+    public constructor() {
+        super( 0.3 );
+
+        this.sun = new BodyConfiguration(
+            LabTatasuryaConstants.SUN_MASS,
+            LabTatasuryaConstants.SUN_RADIUS,
+            0, 0, 0, 0,
+            sun_png
+        );
+        this.planet = new BodyConfiguration(
+            LabTatasuryaConstants.JUPITER_MASS,
+            LabTatasuryaConstants.JUPITER_RADIUS,
+            LabTatasuryaConstants.JUPITER_PERIHELION,
+            0,
+            0,
+            LabTatasuryaConstants.JUPITER_ORBITAL_SPEED_AT_PERIHELION,
+            jupiter_png
+        );
+        this.initialMeasuringTapePosition = new Line(
+            0,0,0,0
+        );
+        this.forceScale = FORCE_SCALE * 120;
+    }
+
+    protected getBodies(): BodyConfiguration[] {
+        return [ this.sun, this.planet ];
+    }
+}
+
 
 
 /**
@@ -655,6 +713,7 @@ SceneFactory.SunMercuryModeConfig = SunMercuryModeConfig;
 SceneFactory.SunVenusModeConfig = SunVenusModeConfig;
 SceneFactory.SunEarthModeConfig = SunEarthModeConfig;
 SceneFactory.SunMarsModeConfig = SunMarsModeConfig;
+SceneFactory.SunJupiterModeConfig = SunJupiterModeConfig;
 SceneFactory.AllPlanetModeConfig = AllPlanetModeConfig;
 
 labTatasurya.register( 'SceneFactory', SceneFactory );

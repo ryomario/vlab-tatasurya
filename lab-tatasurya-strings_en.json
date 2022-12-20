@@ -110,5 +110,8 @@
   },
   "mars": {
     "value": "Mars"
+  },
+  "jupiter": {
+    "value": "Jupiter"
   }
 }

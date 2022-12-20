@@ -22,6 +22,7 @@ const SUN_MERCURY_RADIUS_MULTIPLIER = 2000;
 const SUN_EARTH_RADIUS_MULTIPLIER = 1500;
 const SUN_VENUS_RADIUS_MULTIPLIER = 1700;
 const SUN_MARS_RADIUS_MULTIPLIER = 2000;
+const SUN_JUPITER_RADIUS_MULTIPLIER = 1000;
 const ALL_PLANETS_RADIUS_MULTIPLIER = 1000;
 
 /**
@@ -39,6 +40,7 @@ class PlanetTatasuryaSceneFactory extends SceneFactory {
                 sunVenus: new SunVenusModeConfig(),
                 sunEarth: new SunEarthModeConfig(),
                 sunMars: new SunMarsModeConfig(),
+                sunJupiter: new SunJupiterModeConfig(),
                 allPlanet: new AllPlanetModeConfig(),
             }
         );
@@ -130,5 +132,22 @@ labTatasurya.register( 'SunEarthModeConfig', SunEarthModeConfig );
 }
 
 labTatasurya.register( 'SunMarsModeConfig', SunMarsModeConfig );
+
+/**
+ * Model configuration for a system with the sun and the earth.
+ */
+ class SunJupiterModeConfig extends SceneFactory.SunJupiterModeConfig {
+    public constructor() {
+        super();
+        this.sun.radius *= SUN_JUPITER_RADIUS_MULTIPLIER / 2;
+        this.planet.radius *= SUN_JUPITER_RADIUS_MULTIPLIER;
+
+        // Sun shouldn't move in model modes
+        this.sun.isMovable = false;
+        this.forceScale! *= 0.58; // Tuned so the default force arrow takes 1/2 grid cell
+    }
+}
+
+labTatasurya.register( 'SunJupiterModeConfig', SunJupiterModeConfig );
 
 export default PlanetTatasuryaSceneFactory;
