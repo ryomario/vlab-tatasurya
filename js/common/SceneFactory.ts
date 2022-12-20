@@ -58,6 +58,7 @@ type PlanetName = 'all' | 'mercury' | 'venus' | 'earth' | 'mars' | 'jupiter' | '
 type SelfOptions = {
     allPlanet?: AllPlanetModeConfig | null;
     planetVisibility?: PlanetName[];
+    sunMercury?: SunMercuryModeConfig | null;
     sunEarth?: SunEarthModeConfig | null;
     adjustMoonPathLength?: boolean;
     adjustMoonOrbit?: boolean;
@@ -67,12 +68,14 @@ type SceneFactoryOptions = SelfOptions;
 
 class SceneFactory {
     public readonly scenes: Scene[];
+    public static SunMercuryModeConfig: typeof SunMercuryModeConfig;
     public static SunEarthModeConfig: typeof SunEarthModeConfig;
     public static AllPlanetModeConfig: typeof AllPlanetModeConfig;
 
     public constructor( model: LabTatasuryaModel, modelTandem: Tandem, viewTandem: Tandem, providedOptions?: SceneFactoryOptions ) {
         const options = optionize<SceneFactoryOptions, SelfOptions>()( {
             allPlanet: null,
+            sunMercury: null,
             sunEarth: null,
             planetVisibility: ['earth'],
 
@@ -83,6 +86,7 @@ class SceneFactory {
         this.scenes = [];
 
         options.allPlanet?.center();
+        options.sunMercury?.center();
         options.sunEarth?.center();
 
         const readoutInEarthMasses = ( bodyNode: BodyNode, visibleProperty: TReadOnlyProperty<boolean> ) => new EarthMassReadoutNode( bodyNode, visibleProperty );
@@ -130,6 +134,28 @@ class SceneFactory {
             ) );
         }
 
+        if ( options.sunMercury ) {
+            const starPlanetSceneTandem = modelTandem.createTandem( 'suhMercuryScene' );
+    
+            const star0 = new Star( model, options.sunMercury.sun, starPlanetSceneTandem.createTandem( 'star' ), {
+                maxPathLength: 345608942000 // in km
+            } );
+            const planet0 = new Planet( model, options.sunMercury.planet, starPlanetSceneTandem.createTandem( 'planet' ) );
+    
+            this.scenes.push( new LabTatasuryaScene(
+                model,
+                options.sunMercury,
+                scaledDays,
+                this.createIconImage( [ sun_png, mercury_png ], [ new Text( LabTatasuryaStrings.mercury, { fill: LabTatasuryaColors.foregroundProperty } ) ] ),
+                SUN_MODES_VELOCITY_SCALE,
+                readoutInEarthMasses,
+                options.sunMercury.planet.x / 2,
+                starPlanetSceneTandem,
+                viewTandem.createTandem( LabTatasuryaConstants.PLAY_AREA_TANDEM_NAME ).createTandem( 'starPlanetSceneView' ),
+                [ star0, planet0 ],
+                [ new Pair( star0, planet0, starPlanetSceneTandem.createTandem( 'starPlanetPair' ) ) ]
+            ) );
+        }
         if ( options.sunEarth ) {
             const starPlanetSceneTandem = modelTandem.createTandem( 'suhEarthScene' );
     
@@ -370,6 +396,38 @@ class AllPlanetModeConfig extends ModeConfig {
     }
 }
 
+class SunMercuryModeConfig extends ModeConfig {
+    public readonly sun: BodyConfiguration;
+    public readonly planet: BodyConfiguration;
+
+    public constructor() {
+        super( 1.25 );
+
+        this.sun = new BodyConfiguration(
+            LabTatasuryaConstants.SUN_MASS,
+            LabTatasuryaConstants.SUN_RADIUS,
+            0, 0, 0, 0,
+            sun_png
+        );
+        this.planet = new BodyConfiguration(
+            LabTatasuryaConstants.MERCURY_MASS,
+            LabTatasuryaConstants.MERCURY_RADIUS,
+            LabTatasuryaConstants.MERCURY_PERIHELION,
+            0,
+            0,
+            LabTatasuryaConstants.MERCURY_ORBITAL_SPEED_AT_PERIHELION,
+            mercury_png
+        );
+        this.initialMeasuringTapePosition = new Line(
+            0,0,0,0
+        );
+        this.forceScale = FORCE_SCALE * 120;
+    }
+
+    protected getBodies(): BodyConfiguration[] {
+        return [ this.sun, this.planet ];
+    }
+}
 class SunEarthModeConfig extends ModeConfig {
     public readonly sun: BodyConfiguration;
     public readonly planet: BodyConfiguration;
@@ -473,6 +531,7 @@ class Star extends Body {
     }
 }
 
+SceneFactory.SunMercuryModeConfig = SunMercuryModeConfig;
 SceneFactory.SunEarthModeConfig = SunEarthModeConfig;
 SceneFactory.AllPlanetModeConfig = AllPlanetModeConfig;
 

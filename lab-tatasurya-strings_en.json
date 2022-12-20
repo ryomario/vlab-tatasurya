@@ -101,5 +101,8 @@
   },
   "allPlanets": {
     "value": "Semua planet"
+  },
+  "mercury": {
+    "value": "Merkurius"
   }
 }
