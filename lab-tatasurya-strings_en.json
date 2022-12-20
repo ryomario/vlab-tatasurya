@@ -113,5 +113,8 @@
   },
   "jupiter": {
     "value": "Jupiter"
+  },
+  "saturn": {
+    "value": "Saturnus"
   }
 }
