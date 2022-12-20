@@ -52,10 +52,11 @@ class SceneSelectionControls extends Node {
                 cornerRadius: 5,
                 xMargin: 5,
                 yMargin: 5,
+                xAlign: 'left',
                 buttonAppearanceStrategyOptions: {
-                selectedStroke: LabTatasuryaColors.foregroundProperty,
-                selectedLineWidth: 2,
-                deselectedLineWidth: 0
+                    selectedStroke: LabTatasuryaColors.foregroundProperty,
+                    selectedLineWidth: 2,
+                    deselectedLineWidth: 0
                 }
             },
             tandem: options.tandem.createTandem( 'sceneSelectionRadioButtonGroup' )
