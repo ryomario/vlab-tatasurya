@@ -56,6 +56,7 @@ type SelfOptions = {
     dt?: number;
     gridCenter?: Vector2;
     adjustZoomRange?: boolean;
+    timeSpeedScale?: number;
 };
 export type LabTatasuryaSceneOptions = SelfOptions & PhetioObjectOptions;
 type MeasuringTapeOptions = {
@@ -63,7 +64,7 @@ type MeasuringTapeOptions = {
     units?: string;
 };
 
-type LabTatasuryaSceneImplementationOptions = Pick<LabTatasuryaSceneOptions, 'adjustMoonOrbit' | 'dt' | 'gridCenter' | 'adjustZoomRange'>;
+type LabTatasuryaSceneImplementationOptions = Pick<LabTatasuryaSceneOptions, 'adjustMoonOrbit' | 'dt' | 'gridCenter' | 'adjustZoomRange' | 'timeSpeedScale'>;
 
 class LabTatasuryaScene extends Scene {
     public readonly activeProperty: BooleanProperty;
@@ -127,6 +128,7 @@ class LabTatasuryaScene extends Scene {
             dt: modeConfig.dt,
             adjustMoonOrbit: false,
             adjustZoomRange: false,
+            timeSpeedScale: 1,
         }, providedOptions );
         const gridCenter = options.gridCenter;
         const dt = options.dt;
@@ -196,7 +198,7 @@ class LabTatasuryaScene extends Scene {
         this.zoomLevelProperty.link( () => this.transformProperty.set( this.createTransform( defaultZoomScale, gridCenter ) ) );
 
         const clock = new GravityAndOrbitsClock( model.changeRewindValueProperty, dt, model.steppingProperty, this.timeSpeedProperty, tandem, tandem.createTandem( 'clock' ) );
-        this.physicsEngine = new LabTatasuryaPhysicsEngine( clock, model.gravityEnabledProperty, options.adjustMoonOrbit );
+        this.physicsEngine = new LabTatasuryaPhysicsEngine( clock, model.gravityEnabledProperty, options.adjustMoonOrbit, options.timeSpeedScale );
 
         Multilink.multilink( [ model.isPlayingProperty, this.activeProperty ], ( playButtonPressed, active ) =>
             this.physicsEngine.clock.setRunning( playButtonPressed && active )

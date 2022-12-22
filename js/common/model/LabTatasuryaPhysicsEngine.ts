@@ -41,6 +41,7 @@ class LabTatasuryaPhysicsEngine {
     public readonly clock: GravityAndOrbitsClock;
     public readonly bodies: Body[];
     private readonly stepCompleteEmitter: TEmitter;
+    private readonly timeSpeedScale: number;
 
     /**
      * @param clock
@@ -48,12 +49,14 @@ class LabTatasuryaPhysicsEngine {
      * @param adjustMoonOrbit - in the "Model" screen, there is an additional force from the Earth on the Moon to keep it in orbit
      *                                  - This is necessary because the moon orbital radius is higher (so it is visible)
      */
-    public constructor( clock: GravityAndOrbitsClock, gravityEnabledProperty: Property<boolean>, adjustMoonOrbit: boolean ) {
+    public constructor( clock: GravityAndOrbitsClock, gravityEnabledProperty: Property<boolean>, adjustMoonOrbit: boolean, timeSpeedScale: number = 1 ) {
 
         this.gravityEnabledProperty = gravityEnabledProperty;
         this.adjustMoonOrbit = adjustMoonOrbit;
 
         this.clock = clock;
+
+        this.timeSpeedScale = timeSpeedScale;
 
         // {Body[]} - contains the sun, moon, earth, satellite
         this.bodies = [];
@@ -84,7 +87,7 @@ class LabTatasuryaPhysicsEngine {
         this.bodies.forEach( body => body.storePreviousPosition() );
 
         // standardized time step - based on the slowest time step for the given orbital mode
-        const smallestTimeStep = this.clock.baseDTValue * 0.13125;
+        const smallestTimeStep = this.clock.baseDTValue * 0.13125 * this.timeSpeedScale;
 
         // get the number of times we will need to step the model based on the dt passed in
         const numberOfSteps = this.clock.timeSpeedProperty.value === TimeSpeed.SLOW ? 1 :

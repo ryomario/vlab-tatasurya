@@ -266,7 +266,10 @@ class SceneFactory {
                 starPlanetSceneTandem,
                 viewTandem.createTandem( LabTatasuryaConstants.PLAY_AREA_TANDEM_NAME ).createTandem( 'starPlanetSceneView' ),
                 [ star0, planet0 ],
-                [ new Pair( star0, planet0, starPlanetSceneTandem.createTandem( 'starPlanetPair' ) ) ]
+                [ new Pair( star0, planet0, starPlanetSceneTandem.createTandem( 'starPlanetPair' ) ) ],
+                {
+                    timeSpeedScale: 5
+                }
             ) );
         }
         if ( options.sunSaturn ) {
@@ -288,7 +291,10 @@ class SceneFactory {
                 starPlanetSceneTandem,
                 viewTandem.createTandem( LabTatasuryaConstants.PLAY_AREA_TANDEM_NAME ).createTandem( 'starPlanetSceneView' ),
                 [ star0, planet0 ],
-                [ new Pair( star0, planet0, starPlanetSceneTandem.createTandem( 'starPlanetPair' ) ) ]
+                [ new Pair( star0, planet0, starPlanetSceneTandem.createTandem( 'starPlanetPair' ) ) ],
+                {
+                    timeSpeedScale: 10
+                }
             ) );
         }
         if ( options.sunUranus ) {
@@ -310,7 +316,10 @@ class SceneFactory {
                 starPlanetSceneTandem,
                 viewTandem.createTandem( LabTatasuryaConstants.PLAY_AREA_TANDEM_NAME ).createTandem( 'starPlanetSceneView' ),
                 [ star0, planet0 ],
-                [ new Pair( star0, planet0, starPlanetSceneTandem.createTandem( 'starPlanetPair' ) ) ]
+                [ new Pair( star0, planet0, starPlanetSceneTandem.createTandem( 'starPlanetPair' ) ) ],
+                {
+                    timeSpeedScale: 20
+                }
             ) );
         }
         if ( options.sunNeptune ) {
@@ -332,7 +341,10 @@ class SceneFactory {
                 starPlanetSceneTandem,
                 viewTandem.createTandem( LabTatasuryaConstants.PLAY_AREA_TANDEM_NAME ).createTandem( 'starPlanetSceneView' ),
                 [ star0, planet0 ],
-                [ new Pair( star0, planet0, starPlanetSceneTandem.createTandem( 'starPlanetPair' ) ) ]
+                [ new Pair( star0, planet0, starPlanetSceneTandem.createTandem( 'starPlanetPair' ) ) ],
+                {
+                    timeSpeedScale: 30
+                }
             ) );
         }
 
