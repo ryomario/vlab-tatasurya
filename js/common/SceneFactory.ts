@@ -694,7 +694,7 @@ class SunMarsModeConfig extends ModeConfig {
     public readonly planet: BodyConfiguration;
 
     public constructor() {
-        super( 1.25 );
+        super( 1.1 );
 
         this.sun = new BodyConfiguration(
             LabTatasuryaConstants.SUN_MASS,
@@ -760,7 +760,7 @@ class SunSaturnModeConfig extends ModeConfig {
     public readonly planet: BodyConfiguration;
 
     public constructor() {
-        super( 0.2 );
+        super( 0.15 );
 
         this.sun = new BodyConfiguration(
             LabTatasuryaConstants.SUN_MASS,
@@ -793,7 +793,7 @@ class SunUranusModeConfig extends ModeConfig {
     public readonly planet: BodyConfiguration;
 
     public constructor() {
-        super( 0.1 );
+        super( 0.08 );
 
         this.sun = new BodyConfiguration(
             LabTatasuryaConstants.SUN_MASS,
@@ -826,7 +826,7 @@ class SunNeptuneModeConfig extends ModeConfig {
     public readonly planet: BodyConfiguration;
 
     public constructor() {
-        super( 0.06 );
+        super( 0.056 );
 
         this.sun = new BodyConfiguration(
             LabTatasuryaConstants.SUN_MASS,
