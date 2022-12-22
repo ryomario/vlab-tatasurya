@@ -392,6 +392,12 @@ const getSpeedAtPerihelion = ( R2: number ) => {
     const R1 = LabTatasuryaConstants.EARTH_PERIHELION;
     return Math.sqrt( R1 / R2 ) * v1;
 }
+const getRevolutionPeriodScale = ( RScale: number ) => {
+    const R1 = LabTatasuryaConstants.EARTH_PERIHELION * RScale;
+    const R2 = LabTatasuryaConstants.EARTH_PERIHELION;
+    const T2 = 1;
+    return Math.sqrt( Math.pow( R1, 3 ) / Math.pow( R2, 3 ) * Math.pow( T2, 2 ) );
+}
 
 class BodyConfiguration extends OldBodyConfiguration {
     public readonly planetImage: HTMLImageElement;
@@ -439,7 +445,7 @@ class AllPlanetModeConfig extends ModeConfig {
             {
                 bodyName: 'Merkurius',
                 rotationPeriod: LabTatasuryaConstants.MERCURY_ROTATION_PERIOD,
-                timeSpeedScale: perihelionScale
+                timeSpeedScale: getRevolutionPeriodScale( perihelionScale )
             }
         ) );
         // Venus
@@ -457,7 +463,7 @@ class AllPlanetModeConfig extends ModeConfig {
             {
                 bodyName: 'Venus',
                 rotationPeriod: LabTatasuryaConstants.VENUS_ROTATION_PERIOD,
-                timeSpeedScale: perihelionScale
+                timeSpeedScale: getRevolutionPeriodScale( perihelionScale )
             }
         ) );
         // Bumi
@@ -489,7 +495,7 @@ class AllPlanetModeConfig extends ModeConfig {
             {
                 bodyName: 'Mars',
                 rotationPeriod: LabTatasuryaConstants.MARS_ROTATION_PERIOD,
-                timeSpeedScale: perihelionScale
+                timeSpeedScale: getRevolutionPeriodScale( perihelionScale )
             }
         ) );
         // Jupiter
@@ -507,7 +513,7 @@ class AllPlanetModeConfig extends ModeConfig {
             {
                 bodyName: 'Jupiter',
                 rotationPeriod: LabTatasuryaConstants.JUPITER_ROTATION_PERIOD,
-                timeSpeedScale: perihelionScale
+                timeSpeedScale: getRevolutionPeriodScale( perihelionScale )
             }
         ) );
         // Saturnus
@@ -525,7 +531,7 @@ class AllPlanetModeConfig extends ModeConfig {
             {
                 bodyName: 'Saturnus',
                 rotationPeriod: LabTatasuryaConstants.SATURN_ROTATION_PERIOD,
-                timeSpeedScale: perihelionScale
+                timeSpeedScale: getRevolutionPeriodScale( perihelionScale )
             }
         ) );
         // Uranus
@@ -543,7 +549,7 @@ class AllPlanetModeConfig extends ModeConfig {
             {
                 bodyName: 'Uranus',
                 rotationPeriod: LabTatasuryaConstants.URANUS_ROTATION_PERIOD,
-                timeSpeedScale: perihelionScale
+                timeSpeedScale: getRevolutionPeriodScale( perihelionScale )
             }
         ) );
         // Neptunus
@@ -561,7 +567,7 @@ class AllPlanetModeConfig extends ModeConfig {
             {
                 bodyName: 'Neptunus',
                 rotationPeriod: LabTatasuryaConstants.NEPTUNE_ROTATION_PERIOD,
-                timeSpeedScale: perihelionScale
+                timeSpeedScale: getRevolutionPeriodScale( perihelionScale )
             }
         ) );
 
