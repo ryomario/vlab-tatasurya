@@ -52,6 +52,7 @@ type SelfOptions = {
   maxPathLength?: number;
   pathLengthLimit?: number;
   rotationPeriod?: null | number;
+  timeSpeedScale?: number;
   touchDilation?: number;
 };
 
@@ -102,6 +103,7 @@ class Body extends PhetioObject {
     public readonly forceProperty: RewindableProperty<Vector2>;
     private readonly forceMagnitudeProperty: TReadOnlyProperty<number>;
     public readonly isMovableProperty: BooleanProperty;
+    public readonly timeSpeedScale: number;
 
     public static readonly BodyIO = new IOType<Body, BodyStateType>( 'BodyIO', {
         valueType: Body,
@@ -125,6 +127,7 @@ class Body extends PhetioObject {
             maxPathLength: 1400000000, // max path length for the body in km (should only be used if the body is too close to the center)
             pathLengthLimit: 6000, // limit on the number of points in the path
             rotationPeriod: null, // period of body rotation, in seconds - null rotation period will prevent rotation
+            timeSpeedScale: 1,
             phetioType: Body.BodyIO,
             touchDilation: 15,
             tandem: tandem
@@ -191,6 +194,8 @@ class Body extends PhetioObject {
 
         // (read-only) - period of rotation for the body in seconds
         this.rotationPeriod = options.rotationPeriod;
+
+        this.timeSpeedScale = options.timeSpeedScale;
 
         // (read-only) - passed to visual labels, must be translatable
         this.labelStringProperty = this.type === 'planet' ? LabTatasuryaStrings.planetStringProperty :
@@ -369,7 +374,8 @@ class Body extends PhetioObject {
             this.massProperty.get(),
             this.isCollidedProperty.get(),
             this.rotationProperty.get(),
-            this.rotationPeriod
+            this.rotationPeriod,
+            this.timeSpeedScale
         );
     }
 

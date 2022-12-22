@@ -22,6 +22,7 @@ class BodyState {
     public readonly exploded: boolean;
     public rotation: number;
     public readonly rotationPeriod: number | null;
+    public readonly timeSpeedScale: number;
 
     /**
      * @param body - the parent body from which this BodyState was created
@@ -33,7 +34,7 @@ class BodyState {
      * @param rotation - The rotation of the body about its own origin in radians
      * @param rotationPeriod - in seconds
      */
-    public constructor( body: Body, position: Vector2, velocity: Vector2, acceleration: Vector2, mass: number, exploded: boolean, rotation: number, rotationPeriod: number | null ) {
+    public constructor( body: Body, position: Vector2, velocity: Vector2, acceleration: Vector2, mass: number, exploded: boolean, rotation: number, rotationPeriod: number | null, timeSpeedScale: number = 1 ) {
 
         this.position = position;
         this.velocity = velocity;
@@ -43,6 +44,7 @@ class BodyState {
         this.rotation = rotation;
         this.rotationPeriod = rotationPeriod;
         this.body = body;
+        this.timeSpeedScale = timeSpeedScale;
     }
 }
 

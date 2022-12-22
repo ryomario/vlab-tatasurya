@@ -57,7 +57,7 @@ class ModelState {
     private updatePositions( dt: number ): void {
         for ( let i = 0; i < this.bodyStates.length; i++ ) {
             const bodyState = this.bodyStates[ i ];
-            velocity.setXY( bodyState.velocity.x * dt, bodyState.velocity.y * dt );
+            velocity.setXY( bodyState.velocity.x * dt * bodyState.timeSpeedScale, bodyState.velocity.y * dt * bodyState.timeSpeedScale );
             bodyState.position.add( velocity );
         }
     }
@@ -69,7 +69,7 @@ class ModelState {
         this.updateAccelerations();
         for ( let i = 0; i < this.bodyStates.length; i++ ) {
             const bodyState = this.bodyStates[ i ];
-            bodyState.velocity.add( bodyState.acceleration.multiplyScalar( dt ) );
+            bodyState.velocity.add( bodyState.acceleration.multiplyScalar( dt * bodyState.timeSpeedScale ) );
         }
     }
 
@@ -96,7 +96,7 @@ class ModelState {
 
             // only rotate if necessary
             if ( bodyState.rotationPeriod !== null ) {
-                const rotation = this.getDeltaRotation( bodyState.rotationPeriod, dt );
+                const rotation = this.getDeltaRotation( bodyState.rotationPeriod, dt * bodyState.timeSpeedScale );
                 bodyState.rotation = bodyState.rotation + rotation;
             }
         }

@@ -17,6 +17,7 @@ import labTatasurya from "../../labTatasurya.js";
 
 type BodyConfigurationOptions = {
     rotationPeriod?: null | number;
+    timeSpeedScale?: number;
     bodyName?: string;
 }
 
@@ -29,12 +30,14 @@ class BodyConfiguration {
     public vy: number;
     public isMovable: boolean;
     public readonly rotationPeriod: null | number;
+    public readonly timeSpeedScale: number;
 
     public bodyName: string;
 
     public constructor( mass: number, radius: number, x: number, y: number, vx: number, vy: number, providedOptions?: BodyConfigurationOptions ) {
         const options = optionize<BodyConfigurationOptions>()( {
             rotationPeriod: null, // period of rotation, in seconds - null corresponds to no rotation
+            timeSpeedScale: 1,
             bodyName: 'Planet',
         }, providedOptions ) as Required<BodyConfigurationOptions>;
 
@@ -46,6 +49,7 @@ class BodyConfiguration {
         this.vx = vx;
         this.vy = vy;
         this.rotationPeriod = options.rotationPeriod;
+        this.timeSpeedScale = options.timeSpeedScale;
 
         this.bodyName = options.bodyName;
     }
