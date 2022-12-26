@@ -16,12 +16,13 @@
 
 
 import Matrix3 from "../../../../dot/js/Matrix3.js";
-import { Image, Mipmap, Node, Path } from "../../../../scenery/js/imports.js";
+import { Gradient, Image, Mipmap, Node, Path } from "../../../../scenery/js/imports.js";
 import labTatasurya from "../../labTatasurya.js";
 import Body from "../model/Body.js";
 import sun_png from "../../../images/Matahari_png.js";
 import Shape from "../../../../kite/js/Shape.js";
 import Vector2 from "../../../../dot/js/Vector2.js";
+import RewindableProperty from "../../../../gravity-and-orbits/js/common/model/RewindableProperty.js";
 
 export default abstract class BodyRenderer extends Node {
     private readonly body: Body;
@@ -83,6 +84,32 @@ export class SwitchableBodyRenderer extends BodyRenderer {
 }
 
 labTatasurya.register( 'SwitchableBodyRenderer', SwitchableBodyRenderer );
+
+// export class ShadowableBodyRenderer extends BodyRenderer {
+//     private readonly imageNode: Image;
+//     private viewDiameter: number;
+
+//     public constructor( body: Body, viewDiameter: number, imageName: HTMLImageElement, rotationProperty: RewindableProperty<number>, lightPositionProperty: RewindableProperty<Vector2> ) {
+//         super( body );
+
+//         this.imageNode = new Image( imageName );
+//         this.viewDiameter = viewDiameter;
+//         this.addChild( this.imageNode );
+
+//         const shadowNode = new Gradient();
+        
+//         this.updateViewDiameter();
+//     }
+
+//     private updateViewDiameter(): void {
+//         this.imageNode.matrix = new Matrix3();
+//         const scale = this.viewDiameter / this.imageNode.width;
+//         this.imageNode.setScaleMagnitude( scale );
+
+//         // Make sure the image is centered on the body's center
+//         this.imageNode.translate( -this.imageNode.width / 2 / scale, -this.imageNode.height / 2 / scale );
+//     }
+// }
 
 export class ImageRenderer extends BodyRenderer {
     private readonly imageNode: Image;

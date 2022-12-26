@@ -355,7 +355,7 @@ class SceneFactory {
     /**
      * Creates an image that can be used for the scene icon, showing the nodes of each body in the mode.
      */
-    private createIconImage( images: HTMLImageElement[], nodes?: Node[] ): Node {
+    protected createIconImage( images: HTMLImageElement[], nodes?: Node[] ): Node {
         const children: Node[] = [];
         images.forEach( image => children.push( new Image( image ) ) );
 
