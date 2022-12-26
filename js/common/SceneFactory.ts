@@ -207,9 +207,10 @@ class SceneFactory {
             const starPlanetSceneTandem = modelTandem.createTandem( 'suhEarthScene' );
     
             const star0 = new Star( model, options.sunEarth.sun, starPlanetSceneTandem.createTandem( 'star' ), {
-                maxPathLength: 345608942000 // in km
+                maxPathLength: 345608942000, // in km
+                massSettable: options.sunEarth.massSettable
             } );
-            const planet0 = new Planet( model, options.sunEarth.planet, starPlanetSceneTandem.createTandem( 'planet' ) );
+            const planet0 = new Planet( model, options.sunEarth.planet, starPlanetSceneTandem.createTandem( 'planet' ), { massSettable: options.sunEarth.massSettable } );
     
             this.scenes.push( new LabTatasuryaScene(
                 model,
@@ -656,6 +657,7 @@ class SunVenusModeConfig extends ModeConfig {
 class SunEarthModeConfig extends ModeConfig {
     public readonly sun: BodyConfiguration;
     public readonly planet: BodyConfiguration;
+    public massSettable: boolean = true;
 
     public constructor() {
         super( 1.25 );
@@ -678,7 +680,8 @@ class SunEarthModeConfig extends ModeConfig {
             LabTatasuryaConstants.EARTH_ORBITAL_SPEED_AT_PERIHELION,
             earth_png,
             {
-                bodyName: 'Bumi'
+                bodyName: 'Bumi',
+                rotationPeriod: LabTatasuryaConstants.EARTH_ROTATION_PERIOD
             }
         );
         this.initialMeasuringTapePosition = new Line(

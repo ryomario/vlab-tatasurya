@@ -18,6 +18,8 @@ type StringsType = {
     'orbitNameStringProperty': LinkableProperty<string>;
     'planetTatasuryaName': string;
     'planetTatasuryaNameStringProperty': LinkableProperty<string>;
+    'rotasiRevolusiName': string;
+    'rotasiRevolusiNameStringProperty': LinkableProperty<string>;
   };
   'ourSun': string;
   'ourSunStringProperty': LinkableProperty<string>;
