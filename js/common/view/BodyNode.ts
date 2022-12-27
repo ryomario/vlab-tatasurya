@@ -29,7 +29,7 @@ import labTatasurya from '../../labTatasurya.js';
 import Scene from '../Scene.js';
 
 class BodyNode extends Node {
-    private readonly modelViewTransformProperty: Property<ModelViewTransform2>;
+    protected readonly modelViewTransformProperty: Property<ModelViewTransform2>;
     public readonly body: Body;
     public readonly bodyRenderer: BodyRenderer;
     private readonly positionListener: ( position: Vector2, modelViewTransform: ModelViewTransform2 ) => void;
@@ -217,7 +217,7 @@ class BodyNode extends Node {
     /**
     * Get the diameter of the body in view coordinates.
     */
-    private getViewDiameter(): number {
+    protected getViewDiameter(): number {
         const viewDiameter = this.modelViewTransformProperty.get().modelToViewDeltaX( this.body.diameterProperty.get() );
         return Math.max( viewDiameter, 2 );
     }

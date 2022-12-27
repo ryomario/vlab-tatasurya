@@ -82,6 +82,7 @@ class RotasiRevolusiSceneFactory extends SceneFactory {
                 rotationPeriod: rotasiScene.planet.rotationPeriod
             }
         );
+        planet.showShade = true;
 
         // planet.createRenderer = ( viewDiameter: number ): BodyRenderer => {
         //     const renderer = getImageWithShadowRenderer(

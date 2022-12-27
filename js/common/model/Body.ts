@@ -105,6 +105,8 @@ class Body extends PhetioObject {
     public readonly isMovableProperty: BooleanProperty;
     public readonly timeSpeedScale: number;
 
+    public showShade: boolean = false;
+
     public static readonly BodyIO = new IOType<Body, BodyStateType>( 'BodyIO', {
         valueType: Body,
         documentation: 'Represents a physical body in the simulation',

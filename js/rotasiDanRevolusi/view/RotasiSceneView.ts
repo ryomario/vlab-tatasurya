@@ -26,6 +26,7 @@ import LabTatasuryaStrings from "../../LabTatasuryaStrings.js";
 import RotasiScene from "../model/RotasiScene.js";
 import SpectrumNode from "../../../../scenery-phet/js/SpectrumNode.js";
 import Dimension2 from "../../../../dot/js/Dimension2.js";
+import ShadedBodyNode from "../../common/view/ShadedBodyNode.js";
 
 class RotasiSceneView extends SceneView {
     public constructor( scene: RotasiScene, model: LabTatasuryaModel, tandem: Tandem ) {
@@ -35,7 +36,9 @@ class RotasiSceneView extends SceneView {
 
         const isReturnableProperties: TReadOnlyProperty<boolean>[] = [];
         bodies.forEach( body => {
-            const bodyNode = new BodyNode( body, body.labelAngle, model.isPlayingProperty, scene, tandem.createTandem( body.bodyNodeTandemName ) );
+            const bodyNode = new ShadedBodyNode( body, body.labelAngle, model.isPlayingProperty, scene, {
+                tandem: tandem.createTandem( body.bodyNodeTandemName ),
+            } );
             this.addChild( bodyNode );
 
             const isReturnableProperty = new DerivedProperty( [ body.positionProperty, scene.zoomLevelProperty, body.isCollidedProperty ], ( position, zoomLevel, isCollided ) => {
@@ -46,17 +49,6 @@ class RotasiSceneView extends SceneView {
 
             this.addChild( new ExplosionNode( body, scene.transformProperty ) );
         } );
-
-        const shadowFill = new LinearGradient( 0, 0, RotasiSceneView.STAGE_SIZE.centerX, 0 )
-        .addColorStop( 0, 'rgb( 0, 0, 0 )' )
-        .addColorStop( 1, 'rgba( 0, 0, 0, 0 )' );
-        
-        const shadow = new Rectangle( RotasiSceneView.STAGE_SIZE, {
-            fill: shadowFill,
-            center: this.center
-        } );
-
-        // this.addChild( shadow );
 
         const gridNode = new GridNode( scene.transformProperty, scene.gridSpacing, scene.gridCenter, 50 );
         model.showGridProperty.linkAttribute( gridNode, 'visible' );
