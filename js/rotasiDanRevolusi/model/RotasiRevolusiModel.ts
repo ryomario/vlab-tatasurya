@@ -24,7 +24,7 @@ class RotasiRevolusiModel extends LabTatasuryaModel {
     this.showGravityForceProperty.set( false );
 
     this.showMassProperty.setInitialValue( false );
-    this.showMassProperty.set( true );
+    this.showMassProperty.set( false );
 
     this.showPathProperty.setInitialValue( true );
     this.showPathProperty.set( true );

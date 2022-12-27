@@ -39,6 +39,10 @@ import Vector2Property from "../../../../dot/js/Vector2Property.js";
 import NumberProperty from "../../../../axon/js/NumberProperty.js";
 import RewindableProperty from "../../../../gravity-and-orbits/js/common/model/RewindableProperty.js";
 import Vector2 from "../../../../dot/js/Vector2.js";
+import LabTatasuryaScene from "../../common/LabTatasuryaScene.js";
+import BodyNode from "../../common/view/BodyNode.js";
+import TReadOnlyProperty from "../../../../axon/js/TReadOnlyProperty.js";
+import EarthMassReadoutNode from "../../common/view/EarthMassReadoutNode.js";
 
 // constants
 const SUN_RADIUS_MULTIPLIER = 50; // sun radius multiplier for SunEarthMode and SunEarthMoonMode, tuned by hand
@@ -54,16 +58,38 @@ class RotasiRevolusiSceneFactory extends SceneFactory {
     public constructor( model: LabTatasuryaModel, modelTandem: Tandem, viewTandem: Tandem ) {
         super(
             model,
-            modelTandem, viewTandem, {
-                sunEarth: new SunEarthModeConfig(),
-            }
+            modelTandem, viewTandem,
         );
 
         const SUN_MODES_VELOCITY_SCALE = 4.48E6;
 
+        const revolutionScene = new SunEarthModeConfig();
         const rotasiScene = new EarthRotationConfig();
 
+        revolutionScene.center();
         rotasiScene.center();
+
+        const revolutionPlanetSceneTandem = modelTandem.createTandem( 'revolutionPlanetScene' );
+    
+        const star0 = new Star( model, revolutionScene.sun, revolutionPlanetSceneTandem.createTandem( 'star' ), {
+            maxPathLength: 345608942000, // in km
+            massSettable: revolutionScene.massSettable
+        } );
+        const planet0 = new Planet( model, revolutionScene.planet, revolutionPlanetSceneTandem.createTandem( 'planet' ), { massSettable: revolutionScene.massSettable } );
+
+        this.scenes.push( new LabTatasuryaScene(
+            model,
+            revolutionScene,
+            scaledDays,
+            this.createIconImage( [ sun_png, earth_png ], [ new Text( LabTatasuryaStrings.revolusiPlanet, { fill: LabTatasuryaColors.foregroundProperty } ) ] ),
+            SUN_MODES_VELOCITY_SCALE,
+            ( bodyNode: BodyNode, visibleProperty: TReadOnlyProperty<boolean> ) => new EarthMassReadoutNode( bodyNode, visibleProperty ),
+            LabTatasuryaConstants.EARTH_PERIHELION,
+            revolutionPlanetSceneTandem,
+            viewTandem.createTandem( LabTatasuryaConstants.PLAY_AREA_TANDEM_NAME ).createTandem( 'starPlanetSceneView' ),
+            [ star0, planet0 ],
+            [ new Pair( star0, planet0, revolutionPlanetSceneTandem.createTandem( 'starPlanetPair' ) ) ],
+        ) );
 
         const starPlanetSceneTandem = modelTandem.createTandem( 'rotasiScene' );
 
@@ -104,7 +130,7 @@ class RotasiRevolusiSceneFactory extends SceneFactory {
             model,
             rotasiScene,
             scaledDays,
-            this.createIconImage( [ rotasi_png ], [ new Text( LabTatasuryaStrings.allPlanets, { fill: LabTatasuryaColors.foregroundProperty } ) ] ),
+            this.createIconImage( [ rotasi_png ], [ new Text( LabTatasuryaStrings.rotasiPlanet, { fill: LabTatasuryaColors.foregroundProperty } ) ] ),
             SUN_MODES_VELOCITY_SCALE,
             LabTatasuryaConstants.EARTH_PERIHELION,
             starPlanetSceneTandem,

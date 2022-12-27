@@ -125,5 +125,11 @@
   },
   "neptune": {
     "value": "Neptunus"
+  },
+  "rotasiPlanet": {
+    "value": "Rotasi Planet"
+  },
+  "revolusiPlanet": {
+    "value": "Revolusi Planet"
   }
 }

@@ -60,7 +60,7 @@ class ShadedBodyNode extends BodyNode {
             tandem: Tandem.REQUIRED,
 
             highlightColor: 'rgba(255,255,255,0)',
-            shadowColor: 'black',
+            shadowColor: 'rgba(0,0,0,0.97)',
             highlightDiameterRatio: 0,
             highlightXOffset: 1,
             highlightYOffset: 0
@@ -86,7 +86,7 @@ class ShadedBodyNode extends BodyNode {
             this.shadowNode.fill = new RadialGradient( highlightX, highlightY, 0, highlightX, highlightY, radius * 2 )
                 .addColorStop( 0, options.highlightColor )
                 .addColorStop( options.highlightDiameterRatio, 'rgba(0,0,0,0)' )
-                .addColorStop( 0.9, options.shadowColor );
+                .addColorStop( 0.8, options.shadowColor );
         };
 
         if ( body.showShade ) {

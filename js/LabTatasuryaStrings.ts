@@ -101,6 +101,10 @@ type StringsType = {
   'uranusStringProperty': LinkableProperty<string>;
   'neptune': string;
   'neptuneStringProperty': LinkableProperty<string>;
+  'rotasiPlanet': string;
+  'rotasiPlanetStringProperty': LinkableProperty<string>;
+  'revolusiPlanet': string;
+  'revolusiPlanetStringProperty': LinkableProperty<string>;
 };
 
 const LabTatasuryaStrings = getStringModule( 'LAB_TATASURYA' ) as StringsType;
